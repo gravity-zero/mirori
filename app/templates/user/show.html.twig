@@ -4,13 +4,10 @@
 
 {% block body %}
     <h1>User</h1>
-    {{dump(user)}}
 
     {% if 'ROLE_ORGANISATEUR' in user.roles %}
 
-    <button onclick="myFunction()">lol</button>
-
-    <input id="myDIV" style="display: none" type="text" value="http://localhost:8001/user/new/exposant">
+    <button onclick="myFunction()">Récupérer le lien d'inscription de formulaire pour un exposant</button>
 
     <a href="{{ path('event_new', { user: user.id }) }}">Create new event</a>
 
@@ -62,10 +59,6 @@
                 <th>Roles</th>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
             </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
         </tbody>
     </table>
 
@@ -80,6 +73,7 @@
 
         function myFunction() {
             var x = document.getElementById("myDIV");
+            navigator.clipboard.writeText(x.value);
             if (x.style.display === "none") {
                 x.style.display = "block";
             }

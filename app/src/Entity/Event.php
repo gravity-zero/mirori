@@ -34,6 +34,9 @@ class Event
     #[ORM\OneToMany(mappedBy: 'eventId', targetEntity: User::class)]
     private $users;
 
+    #[ORM\Column(type: 'boolean')]
+    private $isActive;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -130,6 +133,18 @@ class Event
                 $user->setEventId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }

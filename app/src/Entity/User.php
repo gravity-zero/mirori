@@ -33,6 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Event::class)]
+    #[ORM\JoinColumn(onDelete:"CASCADE")]
     private $events;
 
     #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'users')]
