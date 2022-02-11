@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1>User</h1>
+    {{dump(user)}}
+
+    {% if 'ROLE_ORGANISATEUR' in user.roles %}
+
+    <button onclick="myFunction()">lol</button>
+
+    <input id="myDIV" style="display: none" type="text" value="http://localhost:8001/user/new/exposant">
+
+    <a href="{{ path('event_new', { user: user.id }) }}">Create new event</a>
+
+    {% endif %}
+
+    {% if 'ROLE_EXPOSANT' in user.roles %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>organisateur</th>
+                    <th>address</th>
+                    <th>actions</th>
+                    <th>inscris ?</th>
+                </tr>
+            </thead>
+        <tbody>
+        {% for event in events  %}
+            <tr>
+                <td>{{ event.name }}</td>
+                <td>{{ event.user.email }}</td>
+                <td>{{ event.address }}</td>
+                <td><a href="{{ path('user_new_event', {id: user.id, event: event.id}) }}">s'inscrire</a></td>
+                <td>{% if user.eventId.id == event.id %} Oui  {% else %} Non {% endif %}</td>
+            </tr>
+
+       {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% endif %}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td>{{ user.password }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_index') }}">back to list</a>
+
+    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+
+    {{ include('user/_delete_form.html.twig') }}
+
+    {% block javascripts %}
+        <script>
+
+        function myFunction() {
+            var x = document.getElementById("myDIV");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            }
+        }
+        </script>
+
+    {% endblock %}
+{% endblock %}
