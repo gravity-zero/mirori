@@ -6,9 +6,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Endroid\QrCode\Builder\Builder;
+use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Totp\TotpAuthenticatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class SecurityController extends AbstractController
 {
+
+     /**
+     * @Route(name="api_login", path="/api/login_check")
+     * @return JsonResponse
+     */
+    public function api_login(): JsonResponse
+    {
+        $user = $this->getUser();
+
+        return new JsonResponse([
+            'email' => $user->getEmail(),
+            'roles' => $user->getRoles(),
+        ]);
+    }
+
+    
     /**
      * @Route("/login", name="app_login")
      */
@@ -32,5 +51,18 @@ class SecurityController extends AbstractController
     public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    /**
+     * @Route("/authentication/2fa/qr-code", name="app_qr_code")
+     */
+    public function displayGoogleAuthenticatorQrCode(TotpAuthenticatorInterface $totpAuthenticator)
+    {
+        $qrCodeContent = $totpAuthenticator->getQRContent($this->getUser());
+        $result = Builder::create()
+            ->data($qrCodeContent)
+            ->build();
+
+        return new Response($result->getString(), 200, ['Content-Type' => 'image/png']);
     }
 }
