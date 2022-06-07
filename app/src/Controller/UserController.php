@@ -12,11 +12,30 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+
 
 
 #[Route('/user')]
 class UserController extends AbstractController
 {
+    #[Route('/{id}', name: 'user_show', methods: ['GET'])]
+    public function show(User $user, EventRepository $eventRepository, $id): Response
+    {
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+        $jsonContent = $serializer->serialize($user, 'json');
+
+        return new JsonResponse($jsonContent);
+    }
+
     #[Route('/', name: 'user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
@@ -26,34 +45,55 @@ class UserController extends AbstractController
     }
 
     #[Route('/new/{type}', name: 'user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder, $type = ''): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator, UserPasswordEncoderInterface $passwordEncoder, $type = ''): Response
     {
-
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        $parameters = json_decode($request->getContent(), true);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-            if($type == 'exposant'){
-                $user->setRoles(['ROLE_EXPOSANT']);
-            } elseif ($type == 'organisateur'){
-                $user->setRoles(['ROLE_ORGANISATEUR']);
-            }
-            $entityManager->persist($user);
-            $entityManager->flush();
+        $user->setEmail($parameters['email']);
+        $user->setPhone($parameters['phone']);
+        $user->setCompany($parameters['company']);
+        $user->setPassword(
+            $passwordEncoder->encodePassword(
+                $user,
+                $parameters['password']
+            )
+        );
 
-            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+        $phoneError = $validator->validateProperty($user, 'phone');
+        $emailError = $validator->validateProperty($user, 'email');
+        $companyError = $validator->validateProperty($user, 'company');
+        $passwordError = $validator->validateProperty($user, 'password');
+        $formErrors = [];
+
+        if(count($phoneError) > 0) {
+            $formErrors['phoneError'] = $phoneError[0]->getMessage();
+        }
+        if(count($emailError) > 0) {
+            $formErrors['emailError'] = $emailError[0]->getMessage();
+        }
+        if(count($passwordError) > 0) {
+            $formErrors['passwordError'] = $passwordError[0]->getMessage();
+        }
+        if(count($companyError) > 0) {
+            $formErrors['companyError'] = $companyError[0]->getMessage();
+        }
+        if($formErrors) {
+            return new JsonResponse($formErrors);
         }
 
-        return $this->renderForm('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form,
+        if($type == 'exposant'){
+            $user->setRoles(['ROLE_EXPOSANT']);
+        } elseif ($type == 'organisateur'){
+            $user->setRoles(['ROLE_ORGANISATEUR']);
+        }
+
+    
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return new JsonResponse([
+            'success_message' => 'Thank you for registering'
         ]);
     }
 
@@ -68,18 +108,17 @@ class UserController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-         return $this->redirectToRoute('user_show', ['id' => $id], Response::HTTP_SEE_OTHER);
+        return new JsonResponse([
+            'success_message' => 'new event setted to the user'
+        ]);
     }
 
-    #[Route('/{id}', name: 'user_show', methods: ['GET'])]
-    public function show(User $user, EventRepository $eventRepository): Response
+    #[Route('/email/{email}', name: 'user_get_by_email', methods: ['GET'])]
+    public function getUserByEmail(User $user, EventRepository $eventRepository, string $email, UserRepository $userRepository): Response
     {
-        $events = $eventRepository->findAll();
+        $user = $userRepository->findOneBy(['email' => $email]);
 
-        return $this->render('user/show.html.twig', [
-            'user' => $user,
-            'events' => $events
-        ]);
+        return new JsonResponse(array('id' => $user->getId()));
     }
 
     #[Route('/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
@@ -106,7 +145,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'user_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
