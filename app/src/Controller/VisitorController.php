@@ -10,6 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+
 
 #[Route('/visitor')]
 class VisitorController extends AbstractController
@@ -17,37 +24,43 @@ class VisitorController extends AbstractController
     #[Route('/', name: 'visitor_index', methods: ['GET'])]
     public function index(VisitorRepository $visitorRepository): Response
     {
-        return $this->render('visitor/index.html.twig', [
-            'visitors' => $visitorRepository->findAll(),
-        ]);
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+        $jsonContent = $serializer->serialize($visitorRepository->findAll(), 'json');
+
+        return new JsonResponse($jsonContent);
     }
 
     #[Route('/new', name: 'visitor_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $visitor = new Visitor();
-        $form = $this->createForm(VisitorType::class, $visitor);
-        $form->handleRequest($request);
+        $parameters = json_decode($request->getContent(), true);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($visitor);
-            $entityManager->flush();
+        $visitor->setFirstname($parameters['firstname']);
+        $visitor->setLastname($parameters['lastname']);
+        $visitor->setEmail($parameters['email']);
+        $visitor->setToken($parameters['token']);
+        $visitor->setProfession($parameters['profession']);
 
-            return $this->redirectToRoute('visitor_index', [], Response::HTTP_SEE_OTHER);
-        }
+        $entityManager->persist($visitor);
+        $entityManager->flush();
 
-        return $this->renderForm('visitor/new.html.twig', [
-            'visitor' => $visitor,
-            'form' => $form,
+        return new JsonResponse([
+            'success_message' => 'Thank you for registering'
         ]);
     }
 
     #[Route('/{id}', name: 'visitor_show', methods: ['GET'])]
     public function show(Visitor $visitor): Response
     {
-        return $this->render('visitor/show.html.twig', [
-            'visitor' => $visitor,
-        ]);
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+        $jsonContent = $serializer->serialize($visitor, 'json');
+
+        return new JsonResponse($jsonContent);
     }
 
     #[Route('/{id}/edit', name: 'visitor_edit', methods: ['GET', 'POST'])]
@@ -66,16 +79,5 @@ class VisitorController extends AbstractController
             'visitor' => $visitor,
             'form' => $form,
         ]);
-    }
-
-    #[Route('/{id}', name: 'visitor_delete', methods: ['POST'])]
-    public function delete(Request $request, Visitor $visitor, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$visitor->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($visitor);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('visitor_index', [], Response::HTTP_SEE_OTHER);
     }
 }
