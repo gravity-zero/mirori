@@ -39,9 +39,13 @@ class UserController extends AbstractController
     #[Route('/', name: 'user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
+        // A factoriser
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+        $jsonContent = $serializer->serialize($userRepository->findAll(), 'json');
+
+        return new JsonResponse($jsonContent);
     }
 
     #[Route('/new/{type}', name: 'user_new', methods: ['GET', 'POST'])]
