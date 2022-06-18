@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-#[Route('/event')]
+#[Route('/api/event')]
 class EventController extends AbstractController
 {
     #[Route('/', name: 'event_index', methods: ['GET'])]
@@ -61,7 +61,7 @@ class EventController extends AbstractController
         $serializer = new Serializer($normalizers, $encoders);
         $jsonContent = $serializer->serialize($event, 'json');
 
-        return new JsonResponse($jsonContent);
+        return new JsonResponse(json_encode($event));
 
     }
 
