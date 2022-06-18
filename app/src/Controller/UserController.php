@@ -28,24 +28,24 @@ class UserController extends AbstractController
     #[Route('/{id}', name: 'user_show', methods: ['GET'])]
     public function show(User $user, EventRepository $eventRepository, $id): Response
     {
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizers, $encoders);
-        $jsonContent = $serializer->serialize($user, 'json');
-
-        return new JsonResponse($jsonContent);
+        return new JsonResponse(
+            $this->serializer->serialize($user, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+         }]
+        ), 201, [], true );
     }
 
     #[Route('/', name: 'user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
         // A factoriser
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizers, $encoders);
-        $jsonContent = $serializer->serialize($userRepository->findAll(), 'json');
-
-        return new JsonResponse($jsonContent);
+        return new JsonResponse(
+            $this->serializer->serialize($userRepository->findAll(), 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+         }]
+        ), 201, [], true );
     }
 
     #[Route('/new/{type}', name: 'user_new', methods: ['GET', 'POST'])]
