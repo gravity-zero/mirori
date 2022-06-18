@@ -14,17 +14,24 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
+
 
 
 
 #[Route('/api/user')]
 class UserController extends AbstractController
 {
+    private SerializerInterface $serializer;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        SerializerInterface $serializer,
+    ) {
+        $this->em = $em;
+        $this->serializer = $serializer;
+    }
+
     #[Route('/{id}', name: 'user_show', methods: ['GET'])]
     public function show(User $user, EventRepository $eventRepository, $id): Response
     {
