@@ -7,7 +7,7 @@
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-|           |          | récupérer tous les évèhnements |
+|           |          | récupérer tous les évènements |
 
 
 ```http
