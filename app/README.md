@@ -43,8 +43,6 @@
 | :-------- | :------- | :------------------------- |
 |           |          | récupérer tous les users |
 
-#### Get item
-
 ```http
   POST  /user/new/{type}
 ```
@@ -84,8 +82,6 @@
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 |           |          | récupérer tous les visiteurs |
-
-#### Get item
 
 ```http
   POST  /visitor/new/
