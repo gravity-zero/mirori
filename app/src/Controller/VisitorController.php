@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 
-#[Route('/visitor')]
+#[Route('/api/visitor')]
 class VisitorController extends AbstractController
 {
     #[Route('/', name: 'visitor_index', methods: ['GET'])]

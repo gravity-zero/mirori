@@ -22,7 +22,7 @@ use Symfony\Component\Serializer\Serializer;
 
 
 
-#[Route('/user')]
+#[Route('/api/user')]
 class UserController extends AbstractController
 {
     #[Route('/{id}', name: 'user_show', methods: ['GET'])]
