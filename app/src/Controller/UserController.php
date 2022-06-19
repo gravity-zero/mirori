@@ -14,38 +14,45 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 
 
-#[Route('/user')]
+
+#[Route('/api/user')]
 class UserController extends AbstractController
 {
+    private SerializerInterface $serializer;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        SerializerInterface $serializer,
+    ) {
+        $this->em = $em;
+        $this->serializer = $serializer;
+    }
+
     #[Route('/{id}', name: 'user_show', methods: ['GET'])]
     public function show(User $user, EventRepository $eventRepository, $id): Response
     {
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizers, $encoders);
-        $jsonContent = $serializer->serialize($user, 'json');
-
-        return new JsonResponse($jsonContent);
+        return new JsonResponse(
+            $this->serializer->serialize($user, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+         }]
+        ), 201, [], true );
     }
 
     #[Route('/', name: 'user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
         // A factoriser
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizers, $encoders);
-        $jsonContent = $serializer->serialize($userRepository->findAll(), 'json');
-
-        return new JsonResponse($jsonContent);
+        return new JsonResponse(
+            $this->serializer->serialize($userRepository->findAll(), 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+         }]
+        ), 201, [], true );
     }
 
     #[Route('/new/{type}', name: 'user_new', methods: ['GET', 'POST'])]

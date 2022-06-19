@@ -10,26 +10,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 
-#[Route('/visitor')]
+#[Route('/api/visitor')]
 class VisitorController extends AbstractController
 {
+    private SerializerInterface $serializer;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        SerializerInterface $serializer,
+    ) {
+        $this->em = $em;
+        $this->serializer = $serializer;
+    }
+    
     #[Route('/', name: 'visitor_index', methods: ['GET'])]
     public function index(VisitorRepository $visitorRepository): Response
     {
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizers, $encoders);
-        $jsonContent = $serializer->serialize($visitorRepository->findAll(), 'json');
-
-        return new JsonResponse($jsonContent);
+        return new JsonResponse(
+            $this->serializer->serialize($visitorRepository->findAll(), 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+         }]
+        ), 201, [], true );
     }
 
     #[Route('/new', name: 'visitor_new', methods: ['GET', 'POST'])]
@@ -55,12 +62,12 @@ class VisitorController extends AbstractController
     #[Route('/{id}', name: 'visitor_show', methods: ['GET'])]
     public function show(Visitor $visitor): Response
     {
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizers, $encoders);
-        $jsonContent = $serializer->serialize($visitor, 'json');
-
-        return new JsonResponse($jsonContent);
+        return new JsonResponse(
+            $this->serializer->serialize($visitor, 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+         }]
+        ), 201, [], true );
     }
 
     #[Route('/{id}/edit', name: 'visitor_edit', methods: ['GET', 'POST'])]
