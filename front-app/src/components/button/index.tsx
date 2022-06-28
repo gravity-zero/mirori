@@ -15,7 +15,7 @@ const Button: React.FC<IButtonProps> = ({ label, className, disabled, handleClic
 
   <StyledButton
     className={className}
-    onClick={() => { }}
+    onClick={handleClick}
     disabled={disabled}
     type={type}>
     {label}
