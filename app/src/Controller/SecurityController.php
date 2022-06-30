@@ -10,6 +10,10 @@ use Endroid\QrCode\Builder\Builder;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Totp\TotpAuthenticatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Entity\User;
+use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Firebase\JWT\JWT;
 
 
 class SecurityController extends AbstractController
@@ -27,6 +31,27 @@ class SecurityController extends AbstractController
             'email' => $user->getEmail(),
             'roles' => $user->getRoles(),
         ]);
+    }
+
+     /**
+     * @Route("/auth/login", name="login", methods={"POST"})
+     */
+    public function loginJwt(Request $request, UserRepository $userRepository)
+    {
+            $user = $userRepository->findOneBy([
+                    'email'=>$request->get('email'),
+            ]);
+
+            $payload = [
+                "user" => $user->getEmail(),
+                "exp"  => (new \DateTime())->modify("+5 hours")->getTimestamp(),
+            ];
+
+            $jwt = JWT::encode($payload, $this->getParameter('jwt_secret'), 'HS256');
+            return $this->json([
+                'message' => 'success!',
+                'token' => sprintf('Bearer %s', $jwt),
+            ]);
     }
 
     
