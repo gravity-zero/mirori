@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VisitorRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VisitorRepository::class)]
@@ -33,6 +35,14 @@ class Visitor
 
     #[ORM\Column(type: 'boolean')]
     private $rgpd;
+
+    #[ORM\OneToMany(mappedBy: 'visitor', targetEntity: Booking::class)]
+    private $bookings;
+
+    public function __construct()
+    {
+        $this->bookings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +129,36 @@ class Visitor
     public function setRgpd(bool $rgpd): self
     {
         $this->rgpd = $rgpd;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Booking[]
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setVisitor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): self
+    {
+        if ($this->bookings->removeElement($booking)) {
+            // set the owning side to null (unless already changed)
+            if ($booking->getVisitor() === $this) {
+                $booking->setVisitor(null);
+            }
+        }
 
         return $this;
     }
