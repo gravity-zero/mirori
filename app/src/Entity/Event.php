@@ -15,11 +15,6 @@ class Event
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'events')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[ORM\JoinColumn(onDelete:"CASCADE")]
-    private $user;
-
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
@@ -46,18 +41,6 @@ class Event
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     public function getName(): ?string

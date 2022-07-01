@@ -41,21 +41,20 @@ class AppFixtures extends Fixture
         $user->setEmail('haha@outlook.fr');
         $user->setRoles(['ROLE_ORGANISATEUR']);
         $manager->persist($user);
+        $event = new Event();
+        $event->setName('eventName');
+        $event->setAddress('34 rue hetic');
+        $event->setStartDate(new \DateTime());
+        $event->setEndDate(new \DateTime());
+        $event->setIsActive(true);
 
         for ($i = 0; $i < 20; $i++) {
-            $event = new Event();
-            $event->setName('eventName');
-            $event->setAddress('34 rue hetic');
-            $event->setStartDate(new \DateTime());
-            $event->setEndDate(new \DateTime());
-            $event->setIsActive(true);
             $user = new User();
             $user->setCompany('society');
             $user->setPhone($i.'0654789654');
             $user->setPassword($this->passwordEncoder->encodePassword($user, "123456"));
             $user->setEmail($i.'haha@oot.fr');
             $user->setRoles(['ROLE_EXPOSANT']);
-            $event->setUser($user);
             $user->setEvent($event);
             $manager->persist($user);
             $manager->persist($event);
