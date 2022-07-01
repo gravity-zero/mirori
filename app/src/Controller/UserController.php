@@ -125,8 +125,14 @@ class UserController extends AbstractController
     }
 
     #[Route('/email/{email}', name: 'user_get_by_email', methods: ['GET'])]
-    public function getUserByEmail(User $user, EventRepository $eventRepository, string $email, UserRepository $userRepository): Response
+    public function getUserByEmail(User $user, Request $request, EventRepository $eventRepository, string $email, UserRepository $userRepository): Response
     {
+        if($this->params->get('api_key') != $request->get('api_key')){
+            return $this->json([
+                'message' => 'error! invalid api_key',
+            ]);
+        }
+
         $user = $userRepository->findOneBy(['email' => $email]);
 
         return new JsonResponse(array('id' => $user->getId()));

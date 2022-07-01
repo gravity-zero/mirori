@@ -11,6 +11,7 @@ use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Totp\TotpAuthenticatorInte
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\User;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Firebase\JWT\JWT;
@@ -18,6 +19,14 @@ use Firebase\JWT\JWT;
 
 class SecurityController extends AbstractController
 {
+
+    private $params;
+
+    public function __construct(ContainerBagInterface $params)
+    {
+        $this->params = $params;
+    }
+
 
      /**
      * @Route(name="api_login", path="/api/login_check")
@@ -38,20 +47,26 @@ class SecurityController extends AbstractController
      */
     public function loginJwt(Request $request, UserRepository $userRepository)
     {
-            $user = $userRepository->findOneBy([
-                    'email'=>$request->get('email'),
-            ]);
-
-            $payload = [
-                "user" => $user->getEmail(),
-                "exp"  => (new \DateTime())->modify("+5 hours")->getTimestamp(),
-            ];
-
-            $jwt = JWT::encode($payload, $this->getParameter('jwt_secret'), 'HS256');
+        if($this->params->get('api_key') != $request->get('api_key')){
             return $this->json([
-                'message' => 'success!',
-                'token' => sprintf('Bearer %s', $jwt),
+                'message' => 'error! invalid api_key',
             ]);
+        }
+        
+        $user = $userRepository->findOneBy([
+                'email'=>$request->get('email'),
+        ]);
+
+        $payload = [
+            "user" => $user->getEmail(),
+            "exp"  => (new \DateTime())->modify("+5 hours")->getTimestamp(),
+        ];
+
+        $jwt = JWT::encode($payload, $this->getParameter('jwt_secret'), 'HS256');
+        return $this->json([
+            'message' => 'success!',
+            'token' => sprintf('Bearer %s', $jwt),
+        ]);
     }
 
     
