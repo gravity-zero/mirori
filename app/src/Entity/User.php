@@ -38,7 +38,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $events;
 
     #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'users')]
-    private $eventId;
+    #[ORM\JoinColumn(onDelete:"CASCADE")]
+    private $event;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Booking::class)]
     private $booking;
@@ -192,14 +193,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getEventId(): ?Event
+    public function getEvent(): ?Event
     {
-        return $this->eventId;
+        return $this->event;
     }
 
-    public function setEventId(?Event $eventId): self
+    public function setEvent(?Event $event): self
     {
-        $this->eventId = $eventId;
+        $this->event = $event;
 
         return $this;
     }
