@@ -27,6 +27,4 @@ export const InfoContainer = styled.div`
 export const StyledText = styled.p`
   font-weight: 600;
   font-size: 36px;
-  line-height: 60px;
-}
 `;
