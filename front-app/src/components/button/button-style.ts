@@ -1,7 +1,7 @@
 import { theme } from '../../styles/theme';
 import styled from 'styled-components';
 
-export const StyledButton = styled.button`
+export const ButtonStyled = styled.button`
   width: 522px;
   height: 160px;
   background-color: ${theme.colors.black};

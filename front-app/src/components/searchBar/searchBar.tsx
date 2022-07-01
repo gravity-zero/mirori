@@ -4,7 +4,7 @@ import React, {
 } from 'react';
 import { exhibitorsFixtures } from '../../fixtures/exhibitorsFixtures';
 import { IExhibitors } from '../../models/exhibitors.interface';
-import { StyledInput } from './style';
+import { StyledInput } from './searchBar-style';
 
 
 export interface ISearchBarProps {
@@ -26,7 +26,7 @@ const SearchBar: React.FC<ISearchBarProps> = ({
 
   return (
     <div>
-      <StyledInput type="text" placeholder={placeholder} className={className} onChange={(e) => setSearchTerm(e.target.value.toLowerCase())} />
+      <StyledInput type="text" placeholder={placeholder} className={className} onChange={(e: any) => setSearchTerm(e.target.value.toLowerCase())} />
       {/* TODO: replace by the component card */}
       <ul>
         {displayExhibitors.map((exhibitor: IExhibitors) => (

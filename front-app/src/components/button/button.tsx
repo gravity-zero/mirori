@@ -1,7 +1,7 @@
 import React, {
   MouseEvent,
 } from 'react';
-import { StyledButton } from './style';
+import { ButtonStyled } from './button-style';
 
 export interface IButtonProps {
   label: string;
@@ -13,13 +13,13 @@ export interface IButtonProps {
 
 const Button: React.FC<IButtonProps> = ({ label, className, disabled, handleClick, type }) => (
 
-  <StyledButton
+  <ButtonStyled
     className={className}
     onClick={handleClick}
     disabled={disabled}
     type={type}>
     {label}
-  </StyledButton>
+  </ButtonStyled>
 );
 
 export default Button;
