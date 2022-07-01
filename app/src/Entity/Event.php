@@ -17,6 +17,7 @@ class Event
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'events')]
     #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(onDelete:"CASCADE")]
     private $user;
 
     #[ORM\Column(type: 'string', length: 255)]
