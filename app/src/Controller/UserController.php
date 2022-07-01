@@ -14,10 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\Serializer\SerializerInterface;
-
-
-
 
 #[Route('/api/user')]
 class UserController extends AbstractController
@@ -27,9 +25,11 @@ class UserController extends AbstractController
     public function __construct(
         EntityManagerInterface $em,
         SerializerInterface $serializer,
+        ContainerBagInterface $params,
     ) {
         $this->em = $em;
         $this->serializer = $serializer;
+        $this->params = $params;
     }
 
     #[Route('/{id}', name: 'user_show', methods: ['GET'])]
@@ -124,7 +124,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/email/{email}', name: 'user_get_by_email', methods: ['GET'])]
+    #[Route('/email/{email}', name: 'user_get_by_email', methods: ['POST'])]
     public function getUserByEmail(User $user, Request $request, EventRepository $eventRepository, string $email, UserRepository $userRepository): Response
     {
         if($this->params->get('api_key') != $request->get('api_key')){
