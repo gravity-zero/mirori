@@ -13,7 +13,8 @@
   src: url('../assets/fonts/Montserrat-SemiBold.ttf') format('ttf'), 
 }
 
-body {
+body,
+p {
   margin: 0;
   padding: 0;
   border: 0;
