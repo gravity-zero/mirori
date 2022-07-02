@@ -27,16 +27,9 @@ class Event
     #[ORM\Column(type: 'datetime')]
     private $endDate;
 
-    #[ORM\OneToMany(mappedBy: 'eventId', targetEntity: User::class)]
-    private $users;
-
     #[ORM\Column(type: 'boolean')]
     private $isActive;
 
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -87,36 +80,6 @@ class Event
     public function setEndDate(\DateTimeInterface $endDate): self
     {
         $this->endDate = $endDate;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setEventId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getEventId() === $this) {
-                $user->setEventId(null);
-            }
-        }
 
         return $this;
     }
