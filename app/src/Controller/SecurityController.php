@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\User;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use App\Repository\UserRepository;
+use App\Repository\VisitorRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Firebase\JWT\JWT;
 
@@ -45,7 +46,7 @@ class SecurityController extends AbstractController
      /**
      * @Route("/auth/login", name="login", methods={"POST"})
      */
-    public function loginJwt(Request $request, UserRepository $userRepository)
+    public function loginJwt(Request $request, VisitorRepository $visitorRepository)
     {
         
         if($this->params->get('api_key') != $request->get('api_key')){
@@ -55,11 +56,11 @@ class SecurityController extends AbstractController
         }
         
         if($request->get('id')){
-            $user = $userRepository->findOneBy([
+            $user = $visitorRepository->findOneBy([
                 'id'=>$request->get('id'),
             ]);
         } else {
-            $user = $userRepository->findOneBy([
+            $user = $visitorRepository->findOneBy([
                 'email'=>$request->get('email'),
             ]);
         }
