@@ -30,10 +30,6 @@ class Event
     #[ORM\Column(type: 'boolean')]
     private $isActive;
 
-    public function __construct()
-    {
-        $this->users = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -86,14 +82,6 @@ class Event
         $this->endDate = $endDate;
 
         return $this;
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
     }
 
     public function getIsActive(): ?bool
