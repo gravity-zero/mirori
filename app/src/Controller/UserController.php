@@ -25,7 +25,7 @@ class UserController extends AbstractController
     public function __construct(
         EntityManagerInterface $em,
         SerializerInterface $serializer,
-        ContainerBagInterface $params,
+        ContainerBagInterface $params
     ) {
         $this->em = $em;
         $this->serializer = $serializer;

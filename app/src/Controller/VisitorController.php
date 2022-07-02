@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Visitor;
 use App\Form\VisitorType;
+use App\Repository\EventRepository;
 use App\Repository\VisitorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,9 +25,11 @@ class VisitorController extends AbstractController
     public function __construct(
         EntityManagerInterface $em,
         SerializerInterface $serializer,
+        ContainerBagInterface $params,
     ) {
         $this->em = $em;
         $this->serializer = $serializer;
+        $this->params = $params;
     }
     
     #[Route('/', name: 'visitor_index', methods: ['GET'])]
@@ -86,5 +90,21 @@ class VisitorController extends AbstractController
             'visitor' => $visitor,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/email/{email}', name: 'visitor_get_by_email', methods: ['POST'])]
+    public function getVisitorByEmail(Visitor $visitor, Request $request, EventRepository $eventRepository, string $email, VisitorRepository $visitorRepository): Response
+    {
+        if($this->params->get('api_key') != $request->get('api_key')){
+            return $this->json([
+                'message' => 'error! invalid api_key',
+            ]);
+        }
+
+        //TODO Ajouter un contrôle pour vérifier qu'on a bien un email et une gestion d'erreur au cas où il ne trouve pas l'email ?
+
+        $user = $visitorRepository->findOneBy(['email' => $email]);
+
+        return new JsonResponse(array('id' => $user->getId()));
     }
 }
