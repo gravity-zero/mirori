@@ -1,6 +1,12 @@
 
 ## Liste des routes
 
+
+Pour toutes les routes, il faut passer en header :
+
+nom du header : 'Authorization'
+valeur du header :'Bearer + JWT valide'
+
 ```http
   GET  /event/
 ```

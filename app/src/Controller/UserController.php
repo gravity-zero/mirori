@@ -114,7 +114,6 @@ class UserController extends AbstractController
 
         $user = $userRepository->findOneBy(['id' => $id]);
         $event = $eventRepository->findOneBy(['id' => $event]);
-        $user->setEventId($event);
        
         $entityManager->persist($user);
         $entityManager->flush();
