@@ -47,15 +47,22 @@ class SecurityController extends AbstractController
      */
     public function loginJwt(Request $request, UserRepository $userRepository)
     {
+        
         if($this->params->get('api_key') != $request->get('api_key')){
             return $this->json([
                 'message' => 'error! invalid api_key',
             ]);
         }
         
-        $user = $userRepository->findOneBy([
+        if($request->get('id')){
+            $user = $userRepository->findOneBy([
+                'id'=>$request->get('id'),
+            ]);
+        } else {
+            $user = $userRepository->findOneBy([
                 'email'=>$request->get('email'),
-        ]);
+            ]);
+        }
 
         $payload = [
             "user" => $user->getEmail(),
