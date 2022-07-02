@@ -50,10 +50,10 @@ class AppFixtures extends Fixture
 
         for ($i = 0; $i < 20; $i++) {
             $user = new User();
-            $user->setCompany('society');
+            $user->setCompany('society_'.$i);
             $user->setPhone($i.'0654789654');
             $user->setPassword($this->passwordEncoder->encodePassword($user, "123456"));
-            $user->setEmail($i.'haha@oot.fr');
+            $user->setEmail($i.'hihi@woot.fr');
             $user->setRoles(['ROLE_EXPOSANT']);
             $user->setEvent($event);
             $manager->persist($user);
@@ -70,7 +70,7 @@ class AppFixtures extends Fixture
             $visitor->setFirstname('firstName');
             $visitor->setLastname('Lastname');
             $visitor->setPhone($i.'0654789654');
-            $visitor->setEmail($i.'haha@oot.fr');
+            $visitor->setEmail($i.'hoho@waat.fr');
             $visitor->setProfession('dev web');
             $visitor->setRgpd(true);
             $manager->persist($visitor);
