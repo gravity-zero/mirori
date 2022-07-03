@@ -50,6 +50,14 @@ valeur du header :'Bearer + JWT valide'
 |           |          | récupérer tous les users |
 
 ```http
+  GET  /user/search/exposant
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+|           |          | récupérer tous les exposant |
+
+```http
   POST  /user/new/{type}
 ```
 

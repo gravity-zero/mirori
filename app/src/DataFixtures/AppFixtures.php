@@ -34,19 +34,21 @@ class AppFixtures extends Fixture
 
     public function addUsersAndEvents(ObjectManager $manager)
     {
-        $user = new User();
-        $user->setCompany('society');
-        $user->setPhone('0656789654');
-        $user->setPassword($this->passwordEncoder->encodePassword($user, "123456"));
-        $user->setEmail('haha@outlook.fr');
-        $user->setRoles(['ROLE_ORGANISATEUR']);
-        $manager->persist($user);
         $event = new Event();
         $event->setName('eventName');
         $event->setAddress('34 rue hetic');
         $event->setStartDate(new \DateTime());
         $event->setEndDate(new \DateTime());
         $event->setIsActive(true);
+        $user = new User();
+        $user->setCompany('society');
+        $user->setPhone('0656789654');
+        $user->setPassword($this->passwordEncoder->encodePassword($user, "123456"));
+        $user->setEmail('haha@outlook.fr');
+        $user->setRoles(['ROLE_ORGANISATEUR']);
+        $user->setEvent($event);
+        $manager->persist($user);
+        $manager->persist($event);
 
         for ($i = 0; $i < 20; $i++) {
             $user = new User();
@@ -55,9 +57,12 @@ class AppFixtures extends Fixture
             $user->setPassword($this->passwordEncoder->encodePassword($user, "123456"));
             $user->setEmail($i.'hihi@woot.fr');
             $user->setRoles(['ROLE_EXPOSANT']);
+            $user->setCategory('agriculture');
+            $user->setPicture('https://previews.123rf.com/images/andreykuzmin/andreykuzmin1204/andreykuzmin120400114/13323229-b%C3%A9b%C3%A9-chat-d-un-mois.jpg');
+            $user->setAlley($i);
+            $user->setPlace($i+20);
             $user->setEvent($event);
             $manager->persist($user);
-            $manager->persist($event);
         }
 
         $manager->flush();

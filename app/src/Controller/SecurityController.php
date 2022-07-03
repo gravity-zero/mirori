@@ -46,7 +46,7 @@ class SecurityController extends AbstractController
      /**
      * @Route("/auth/login", name="login", methods={"POST"})
      */
-    public function loginJwt(Request $request, VisitorRepository $visitorRepository)
+    public function loginJwt(Request $request, UserRepository $userRepository)
     {
         
         if($this->params->get('api_key') != $request->get('api_key')){
@@ -56,11 +56,11 @@ class SecurityController extends AbstractController
         }
         
         if($request->get('id')){
-            $user = $visitorRepository->findOneBy([
+            $user = $userRepository->findOneBy([
                 'id'=>$request->get('id'),
             ]);
         } else {
-            $user = $visitorRepository->findOneBy([
+            $user = $userRepository->findOneBy([
                 'email'=>$request->get('email'),
             ]);
         }
