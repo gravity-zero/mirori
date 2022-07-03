@@ -55,6 +55,18 @@ class UserController extends AbstractController
         ), 201, [], true );
     }
 
+    #[Route('/search/exposant', name: 'user_index', methods: ['GET'])]
+    public function getAllExposant(UserRepository $userRepository): Response
+    {
+        // A factoriser
+        return new JsonResponse(
+            $this->serializer->serialize($userRepository->findByRole('EXPOSANT'), 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+         }]
+        ), 201, [], true );
+    }
+
     #[Route('/new/{type}', name: 'user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator, UserPasswordEncoderInterface $passwordEncoder, $type = ''): Response
     {

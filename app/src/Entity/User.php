@@ -24,6 +24,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private $phone;
 
+    #[ORM\Column(type: 'string', length: 180, nullable: true)]
+    private $picture;
+
+    #[ORM\Column(type: 'string', length: 180, nullable: true)]
+    private $category;
+
+    #[ORM\Column(type: 'string', length: 180, nullable: true)]
+    private $alley;
+
+    #[ORM\Column(type: 'string', length: 180, nullable: true)]
+    private $place;
+
     #[ORM\Column(type: 'string', length: 180)]
     private $company;
 
@@ -196,6 +208,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $booking->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?string $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getAlley(): ?string
+    {
+        return $this->alley;
+    }
+
+    public function setAlley(?string $alley): self
+    {
+        $this->alley = $alley;
+
+        return $this;
+    }
+
+    public function getPlace(): ?string
+    {
+        return $this->place;
+    }
+
+    public function setPlace(?string $place): self
+    {
+        $this->place = $place;
 
         return $this;
     }
