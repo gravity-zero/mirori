@@ -23,6 +23,12 @@ p {
   vertical-align: baseline;
 }
 
+
+a {
+  text-decoration: none;
+  font-size: 36px;
+}
+
 ol,
 ul {
   list-style: none;

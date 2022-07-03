@@ -1,30 +1,44 @@
 import React from 'react';
-import { CardContainer, Image, InfoContainer, StyledText } from './card-style';
-
-export interface ICardColumn {
-  content: React.ReactNode | string;
-  name: string;
-}
+import { Link } from 'react-router-dom';
+import { ILocation } from '../../models/location.interface';
+import { CardContainer, FlexContainer, Image, InfoContainer, LocationContainer, StyledText, Testi } from './card-style';
 
 export interface ICardProps {
-  columns: ICardColumn[];
-  image: string | null;
+  image?: string;
+  name?: string;
+  category?: string;
+  emplacement?: ILocation
 }
 
 const Card: React.FC<ICardProps> = ({
-  columns = [],
   image,
+  name,
+  category,
+  emplacement
 }) => {
 
   return (
-    <CardContainer>
-      <Image src={image || ''} />
-      <InfoContainer>
-        {columns.map((column) => (
-          <div key={`column-${column.name}`}><StyledText>{column.content}</StyledText></div>
-        ))}
-      </InfoContainer>
-    </CardContainer>
+    <FlexContainer>
+
+      <CardContainer>
+
+        <Testi>
+          <Image src={image} />
+          <InfoContainer>
+            <StyledText>{name}</StyledText>
+            <StyledText>{category}</StyledText>
+            <LocationContainer>
+              <StyledText>Allée {emplacement?.alley} - Place {emplacement?.place}</StyledText>
+              <Link to=''>Voir le plan</Link>
+            </LocationContainer>
+          </InfoContainer>
+        </Testi>
+
+
+
+      </CardContainer>
+
+    </FlexContainer >
   );
 }
 
