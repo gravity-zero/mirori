@@ -5,6 +5,7 @@ import React, {
 import { exhibitorsFixtures } from '../../fixtures/exhibitorsFixtures';
 import { IExhibitors } from '../../models/exhibitors.interface';
 import Card from '../card/card';
+import Select from '../filter/filter';
 import { Container, StyledInput } from './searchBar-style';
 
 
@@ -20,10 +21,23 @@ const SearchBar: React.FC<ISearchBarProps> = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [exhibitors, setExhibitors] = useState<IExhibitors[]>(exhibitorsFixtures.exhibitors);
   const [displayExhibitors, setDisplayExhibitors] = useState<IExhibitors[]>(exhibitorsFixtures.exhibitors);
+  const [select, setSelect] = useState('')
+
+  const handleChange = (event: any) => {
+    setSelect(event.currentTarget.value);
+  };
 
   useEffect(() => {
     setDisplayExhibitors(exhibitors.filter((exhibitor: IExhibitors) => exhibitor.name.toLowerCase().includes(searchTerm)));
   }, [searchTerm]);
+
+  useEffect(() => {
+    if (!select) {
+      setDisplayExhibitors(exhibitors)
+    } else {
+      setDisplayExhibitors(exhibitors.filter((exhibitor: IExhibitors) => exhibitor.name === select))
+    }
+  }, [select]);
 
   return (
     <div>

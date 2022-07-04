@@ -2,7 +2,6 @@ import React from 'react';
 import SearchBar from '../../components/searchBar/searchBar';
 import { ExhibitorsContainer } from './exhibitors-style'
 
-
 const Exhibitors: React.FC = () => {
 
   return (
