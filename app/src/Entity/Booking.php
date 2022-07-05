@@ -22,12 +22,12 @@ class Booking
     #[ORM\Column(type: 'string', length: 255)]
     private $title;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'visitor')]
+    #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'bookings')]
     #[ORM\JoinColumn(nullable: false)]
-    private $user;
+    private $event;
 
-    #[ORM\ManyToOne(targetEntity: Visitor::class, inversedBy: 'bookings')]
-    private $visitor;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'bookings')]
+    private $users;
 
     public function getId(): ?int
     {
@@ -70,26 +70,26 @@ class Booking
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getEvent(): ?Event
     {
-        return $this->user;
+        return $this->event;
     }
 
-    public function setUser(?User $user): self
+    public function setEvent(?Event $event): self
     {
-        $this->user = $user;
+        $this->event = $event;
 
         return $this;
     }
 
-    public function getVisitor(): ?Visitor
+    public function getUsers(): ?User
     {
-        return $this->visitor;
+        return $this->users;
     }
 
-    public function setVisitor(?Visitor $visitor): self
+    public function setUsers(?User $users): self
     {
-        $this->visitor = $visitor;
+        $this->users = $users;
 
         return $this;
     }

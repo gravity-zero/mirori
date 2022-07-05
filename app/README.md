@@ -57,6 +57,24 @@ valeur du header :'Bearer + JWT valide'
 | :-------- | :------- | :------------------------- |
 |           |          | récupérer tous les exposant |
 
+
+```http
+  GET  /user/search/visitor
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+|           |          | récupérer tous les visitor |
+
+
+```http
+  GET  /user/search/organisateur
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+|           |          | récupérer tous les orga |
+
 ```http
   POST  /user/new/{type}
 ```
@@ -88,35 +106,3 @@ valeur du header :'Bearer + JWT valide'
 | Parameter | Type     | Description                           |
 | :-------- | :------- | :--------------------------------     |
 | `id`      | `int`    | modifier un user grâce à son id  |
-
-```http
-  GET  /visitor/
-```
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-|           |          | récupérer tous les visiteurs |
-
-```http
-  POST  /visitor/new/
-```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `user`      | `int`  | créer un visiteur |
-
-```http
-  GET  /visitor/{id}
-```
-
-| Parameter | Type     | Description                           |
-| :-------- | :------- | :--------------------------------     |
-| `id`      | `int`    | récupérer un visiteur grâce à son id |
-
-```http
-  PATCH/PUT  /visitor/{id}/edit
-```
-
-| Parameter | Type     | Description                           |
-| :-------- | :------- | :--------------------------------     |
-| `id`      | `int`    | modifier un visiteur grâce à son id  |
