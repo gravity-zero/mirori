@@ -2,7 +2,7 @@
 ## Liste des routes
 
 
-Pour toutes les routes, il faut passer en header :
+Pour toutes les routes qui commencent par /api/, il faut passer en header :
 
 nom du header : 'Authorization'
 valeur du header :'Bearer + JWT valide'
@@ -108,7 +108,7 @@ valeur du header :'Bearer + JWT valide'
 | `id`      | `int`    | modifier un user grâce à son id  |
 
 ```http
-  GET  /api/user/visitor/auth/{jwt}
+  GET  /visitor/auth/{jwt}
 ```
 
 | Parameter | Type     | Description                           |

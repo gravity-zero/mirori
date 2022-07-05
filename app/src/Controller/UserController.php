@@ -46,24 +46,6 @@ class UserController extends AbstractController
         ), 201, [], true );
     }
 
-    #[Route('/visitor/auth/{jwt}', name: 'login_check', methods: ['GET'])]
-    public function login_check(UserRepository $userRepository, $jwt): Response
-    {
-        try {
-            $credentials = str_replace('Bearer ', '', $jwt);
-            $this->params->get('jwt_secret');
-            $jwt = (array) JWT::decode($credentials, new Key($this->params->get('jwt_secret'), 'HS256'));
-            return new JsonResponse(
-                $this->serializer->serialize($userRepository->findOneBy(['email' => $jwt['user']]), 'json', [
-                'circular_reference_handler' => function ($object) {
-                    return $object->getId();
-             }]
-            ), 201, [], true );
-        }catch (\Exception $exception) {
-                throw new AuthenticationException($exception->getMessage());
-        }
-    }
-
     #[Route('/', name: 'user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
