@@ -68,7 +68,7 @@ class AppFixtures extends Fixture
             $user->setCompany('society_'.$i);
             $user->setPhone($i.'0654789654');
             $user->setPassword($this->passwordEncoder->encodePassword($user, "123456"));
-            $user->setEmail($i.'hihi@woot.fr');
+            $user->setEmail($i.'hoho@waat.fr');
             $user->setRoles(['ROLE_VISITOR']);
             $user->setCategory('agriculture');
             $user->setPicture('https://previews.123rf.com/images/andreykuzmin/andreykuzmin1204/andreykuzmin120400114/13323229-b%C3%A9b%C3%A9-chat-d-un-mois.jpg');
