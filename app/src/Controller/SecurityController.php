@@ -73,7 +73,7 @@ class SecurityController extends AbstractController
         $jwt = JWT::encode($payload, $this->getParameter('jwt_secret'), 'HS256');
         return $this->json([
             'message' => 'success!',
-            'token' => sprintf('Bearer %s', $jwt),
+            'token' => sprintf('%s', $jwt),
         ]);
     }
 
