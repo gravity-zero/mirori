@@ -18,6 +18,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $firstname;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $lastname;
+
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private $email;
 
@@ -36,7 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 180, nullable: true)]
     private $place;
 
-    #[ORM\Column(type: 'string', length: 180)]
+    #[ORM\Column(type: 'string', length: 180, nullable: true)]
     private $company;
 
     #[ORM\Column(type: 'json')]
@@ -45,16 +51,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $rgpd;
+
     #[ORM\ManyToOne(targetEntity: Event::class, inversedBy: 'users')]
     #[ORM\JoinColumn(onDelete:"CASCADE")]
     private $event;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Booking::class)]
-    private $booking;
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: Booking::class)]
+    private $bookings;
 
     public function __construct()
     {
         $this->booking = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -182,36 +192,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Booking[]
-     */
-    public function getBooking(): Collection
-    {
-        return $this->booking;
-    }
-
-    public function addBooking(Booking $booking): self
-    {
-        if (!$this->booking->contains($booking)) {
-            $this->booking[] = $booking;
-            $booking->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBooking(Booking $booking): self
-    {
-        if ($this->booking->removeElement($booking)) {
-            // set the owning side to null (unless already changed)
-            if ($booking->getUser() === $this) {
-                $booking->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getPicture(): ?string
     {
         return $this->picture;
@@ -258,5 +238,49 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->place = $place;
 
         return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(?string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(?string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getRgpd(): ?bool
+    {
+        return $this->rgpd;
+    }
+
+    public function setRgpd(?bool $rgpd): self
+    {
+        $this->rgpd = $rgpd;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Booking[]
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
     }
 }

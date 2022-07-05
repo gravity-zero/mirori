@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Entity\User;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use App\Repository\UserRepository;
-use App\Repository\VisitorRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Firebase\JWT\JWT;
 
@@ -67,6 +66,7 @@ class SecurityController extends AbstractController
 
         $payload = [
             "user" => $user->getEmail(),
+            "roles" => $user->getRoles(),
             "exp"  => (new \DateTime())->modify("+5 hours")->getTimestamp(),
         ];
 
