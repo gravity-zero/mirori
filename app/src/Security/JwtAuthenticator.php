@@ -17,6 +17,7 @@ use Firebase\JWT\Key;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 
+
 class JwtAuthenticator extends AbstractGuardAuthenticator
 {
     private $em;

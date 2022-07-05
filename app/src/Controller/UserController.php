@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 #[Route('/api/user')]
 class UserController extends AbstractController
@@ -41,6 +44,24 @@ class UserController extends AbstractController
                 return $object->getId();
          }]
         ), 201, [], true );
+    }
+
+    #[Route('/visitor/auth/{jwt}', name: 'login_check', methods: ['GET'])]
+    public function login_check(UserRepository $userRepository, $jwt): Response
+    {
+        try {
+            $credentials = str_replace('Bearer ', '', $jwt);
+            $this->params->get('jwt_secret');
+            $jwt = (array) JWT::decode($credentials, new Key($this->params->get('jwt_secret'), 'HS256'));
+            return new JsonResponse(
+                $this->serializer->serialize($userRepository->findOneBy(['email' => $jwt['user']]), 'json', [
+                'circular_reference_handler' => function ($object) {
+                    return $object->getId();
+             }]
+            ), 201, [], true );
+        }catch (\Exception $exception) {
+                throw new AuthenticationException($exception->getMessage());
+        }
     }
 
     #[Route('/', name: 'user_index', methods: ['GET'])]

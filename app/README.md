@@ -106,3 +106,13 @@ valeur du header :'Bearer + JWT valide'
 | Parameter | Type     | Description                           |
 | :-------- | :------- | :--------------------------------     |
 | `id`      | `int`    | modifier un user grâce à son id  |
+
+```http
+  GET  /api/user/visitor/auth/{jwt}
+```
+
+| Parameter | Type     | Description                           |
+| :-------- | :------- | :--------------------------------     |
+| `jwt`      | `string`    | vérifier si le jwt est valide, si oui, renvoie le user  |
+
+
