@@ -14,6 +14,11 @@ export const DateContainer = styled.div`
   margin: 78px 34px;
 `;
 
+export const ImageContainer = styled.img`
+  width: 381px;
+  height: 338px;
+`;
+
 export const HourContainer = styled.div`
   font-size: 48px;
   margin: 78px 34px;

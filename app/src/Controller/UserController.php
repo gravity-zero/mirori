@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 #[Route('/api/user')]
 class UserController extends AbstractController
@@ -55,12 +58,36 @@ class UserController extends AbstractController
         ), 201, [], true );
     }
 
-    #[Route('/search/exposant', name: 'user_index', methods: ['GET'])]
+    #[Route('/search/exposant', name: 'user_get_exposant', methods: ['GET'])]
     public function getAllExposant(UserRepository $userRepository): Response
     {
         // A factoriser
         return new JsonResponse(
             $this->serializer->serialize($userRepository->findByRole('EXPOSANT'), 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+         }]
+        ), 201, [], true );
+    }
+
+    #[Route('/search/visitor', name: 'user_get_visitor', methods: ['GET'])]
+    public function getAllVisitors(UserRepository $userRepository): Response
+    {
+        // A factoriser
+        return new JsonResponse(
+            $this->serializer->serialize($userRepository->findByRole('VISITOR'), 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+         }]
+        ), 201, [], true );
+    }
+
+    #[Route('/search/oraganisator', name: 'user_get_organisator', methods: ['GET'])]
+    public function getAllOrganisator(UserRepository $userRepository): Response
+    {
+        // A factoriser
+        return new JsonResponse(
+            $this->serializer->serialize($userRepository->findByRole('ORGANISATEUR'), 'json', [
             'circular_reference_handler' => function ($object) {
                 return $object->getId();
          }]
@@ -109,6 +136,8 @@ class UserController extends AbstractController
             $user->setRoles(['ROLE_EXPOSANT']);
         } elseif ($type == 'organisateur'){
             $user->setRoles(['ROLE_ORGANISATEUR']);
+        } elseif ($type == 'visitor'){
+            $user->setRoles(['ROLE_VISITOR']);
         }
 
     
@@ -135,8 +164,8 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/email/{email}', name: 'user_get_by_email', methods: ['POST'])]
-    public function getUserByEmail(User $user, Request $request, EventRepository $eventRepository, string $email, UserRepository $userRepository): Response
+    #[Route('/email/{email}', name: 'user_id_get_by_email', methods: ['POST'])]
+    public function getUserIdByEmail(User $user, Request $request, EventRepository $eventRepository, string $email, UserRepository $userRepository): Response
     {
         if($this->params->get('api_key') != $request->get('api_key')){
             return $this->json([
@@ -149,27 +178,40 @@ class UserController extends AbstractController
         return new JsonResponse(array('id' => $user->getId()));
     }
 
-    #[Route('/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder): Response
+    #[Route('/get/email/{email}', name: 'user_get_by_email', methods: ['POST'])]
+    public function getUserByEmail(User $user, Request $request, EventRepository $eventRepository, string $email, UserRepository $userRepository): Response
     {
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        return new JsonResponse(
+            $this->serializer->serialize($userRepository->findOneBy(['email' => $email]), 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+         }]
+        ), 201, [], true );
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-            $entityManager->flush();
+    }
 
-            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
-        }
+    #[Route('/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
+    public function edit($id, Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder): Response
+    {
+        $user = $entityManager->getRepository(User::class)->find($id);
 
-        return $this->renderForm('user/edit.html.twig', [
-            'user' => $user,
-            'form' => $form,
+        $parameters = json_decode($request->getContent(), true);
+
+        $user->setEmail($parameters['email']);
+        $user->setPhone($parameters['phone']);
+        $user->setCompany($parameters['company']);
+        $user->setPassword(
+            $passwordEncoder->encodePassword(
+                $user,
+                $parameters['password']
+            )
+        );
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return new JsonResponse([
+            'success_message' => 'Edit success'
         ]);
     }
 }
