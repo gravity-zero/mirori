@@ -38,12 +38,18 @@ class UserController extends AbstractController
     #[Route('/{id}', name: 'user_show', methods: ['GET'])]
     public function show(User $user, EventRepository $eventRepository, $id): Response
     {
-        return new JsonResponse(
+
+        $response = new JsonResponse(
             $this->serializer->serialize($user, 'json', [
             'circular_reference_handler' => function ($object) {
                 return $object->getId();
          }]
         ), 201, [], true );
+
+        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+
+        return $response;
     }
 
     #[Route('/', name: 'user_index', methods: ['GET'])]
