@@ -38,7 +38,6 @@ class UserController extends AbstractController
     #[Route('/{id}', name: 'user_show', methods: ['GET'])]
     public function show(User $user, EventRepository $eventRepository, $id): Response
     {
-
         $response = new JsonResponse(
             $this->serializer->serialize($user, 'json', [
             'circular_reference_handler' => function ($object) {
