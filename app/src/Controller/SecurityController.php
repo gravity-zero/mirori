@@ -16,7 +16,6 @@ use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Firebase\JWT\JWT;
 
-
 class SecurityController extends AbstractController
 {
 
