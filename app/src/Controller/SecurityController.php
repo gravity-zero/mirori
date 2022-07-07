@@ -15,7 +15,6 @@ use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Firebase\JWT\JWT;
-use Doctrine\ORM\EntityNotFoundException;
 
 class SecurityController extends AbstractController
 {
