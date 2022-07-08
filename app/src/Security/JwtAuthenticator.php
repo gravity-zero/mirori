@@ -50,7 +50,6 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
     {
         try {
             $credentials = str_replace('Bearer ', '', $credentials);
-            $this->params->get('jwt_secret');
             $jwt = (array) JWT::decode($credentials, new Key($this->params->get('jwt_secret'), 'HS256'));
             return $this->em->getRepository(User::class)
                     ->findOneBy([
