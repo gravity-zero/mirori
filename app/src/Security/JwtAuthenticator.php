@@ -50,7 +50,6 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
     {
         try {
             $credentials = str_replace('Bearer ', '', $credentials);
-            $this->params->get('jwt_secret');
             $jwt = (array) JWT::decode($credentials, new Key($this->params->get('jwt_secret'), 'HS256'));
             return $this->em->getRepository(User::class)
                     ->findOneBy([
@@ -69,6 +68,7 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
+        dd('a');
         return new JsonResponse([
             'message' => $exception->getMessage()
         ], Response::HTTP_UNAUTHORIZED);

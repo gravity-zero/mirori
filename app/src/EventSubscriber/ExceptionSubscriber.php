@@ -24,13 +24,13 @@ class ExceptionSubscriber implements EventSubscriberInterface
     {
         $exception = $event->getThrowable();
         $message = sprintf(
-            'My Error says: %s with code: %s',
+            '%s with code: %s',
             $exception->getMessage(),
             $exception->getCode()
         );
 
         $response = new JsonResponse(
-            ['message' => $message]
+            ['error' => $message]
         );
 
         $event->setResponse($response);

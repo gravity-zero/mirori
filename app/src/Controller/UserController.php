@@ -82,7 +82,7 @@ class UserController extends AbstractController
         ), 201, [], true );
     }
 
-    #[Route('/search/oraganisator', name: 'user_get_organisator', methods: ['GET'])]
+    #[Route('/search/organisator', name: 'user_get_organisator', methods: ['GET'])]
     public function getAllOrganisator(UserRepository $userRepository): Response
     {
         // A factoriser
