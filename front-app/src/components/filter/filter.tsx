@@ -17,7 +17,7 @@ const Select: React.FC<ISelectProps> = ({
     <SelectContainer name="" id="" onChange={handleChange}>
       <option value="Name">Nom</option>
       {values.map((value: IExhibitors) => (
-        <option value={value.name}>{value.name}</option>
+        <option value={value.firstname}>{value.firstname}</option>
       ))}
     </SelectContainer>
 
