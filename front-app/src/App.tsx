@@ -1,8 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'
-import Card from './components/card/card';
 import Exhibitors from './pages/exhibitors/exhibitors';
-import Exhibitos from './pages/exhibitors/exhibitors';
+import Loading from './pages/exhibitors/loading';
+
 
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path='/exhibitors' element={<Exhibitors />} ></Route>
+        <Route path='/facialRecognitionLoading' element={<Loading />} ></Route>
       </Routes>
     </div>
   );

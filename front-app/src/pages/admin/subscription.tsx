@@ -1,13 +1,7 @@
-import React, {
-  useState
-} from 'react';
+import React, { useState } from 'react';
 import Modal from '../../modal/modal'
 
-
-
-export interface ISubscriptionProps {
-
-}
+export interface ISubscriptionProps { }
 
 const Subscription: React.FC<ISubscriptionProps> = ({
 

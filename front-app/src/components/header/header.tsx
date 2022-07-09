@@ -17,7 +17,7 @@ const Header: React.FC<IHeaderProps> = () => {
         <p>{date.getDate()}</p>
         <p>{month[date.getMonth()]}</p>
       </DateContainer>
-      <img src="/front-app/assets/images/logo.png" alt="" />
+      <img src="logo1.png" alt="" />
       <HourContainer>{date.getHours()} : {date.getHours()}</HourContainer>
     </HeaderContainer>
 

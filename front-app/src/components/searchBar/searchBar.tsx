@@ -2,11 +2,11 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import { exhibitorsFixtures } from '../../fixtures/exhibitorsFixtures';
 import { IExhibitors } from '../../models/exhibitors.interface';
 import Card from '../card/card';
 import Select from '../filter/filter';
 import { Container, StyledInput } from './searchBar-style';
+import useGetExhibitors from '../../Hook/useGetExhibitors';
 
 
 export interface ISearchBarProps {
@@ -19,23 +19,35 @@ const SearchBar: React.FC<ISearchBarProps> = ({
   placeholder,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [exhibitors, setExhibitors] = useState<IExhibitors[]>(exhibitorsFixtures.exhibitors);
-  const [displayExhibitors, setDisplayExhibitors] = useState<IExhibitors[]>(exhibitorsFixtures.exhibitors);
+  const [exhibitors, setExhibitors] = useState<IExhibitors[]>([]);
+  const [displayExhibitors, setDisplayExhibitors] = useState<IExhibitors[]>(exhibitors);
   const [select, setSelect] = useState('')
+
+  const getExhibitors = useGetExhibitors()
+
+
 
   const handleChange = (event: any) => {
     setSelect(event.currentTarget.value);
   };
 
   useEffect(() => {
-    setDisplayExhibitors(exhibitors.filter((exhibitor: IExhibitors) => exhibitor.name.toLowerCase().includes(searchTerm)));
+    getExhibitors()
+      .then(data => {
+        setExhibitors(data);
+        setDisplayExhibitors(data);
+      })
+  }, [])
+
+  useEffect(() => {
+    setDisplayExhibitors(exhibitors.filter((exhibitor: IExhibitors) => exhibitor.firstname.toLowerCase().includes(searchTerm)));
   }, [searchTerm]);
 
   useEffect(() => {
     if (!select) {
       setDisplayExhibitors(exhibitors)
     } else {
-      setDisplayExhibitors(exhibitors.filter((exhibitor: IExhibitors) => exhibitor.name === select))
+      setDisplayExhibitors(exhibitors.filter((exhibitor: IExhibitors) => exhibitor.firstname === select))
     }
   }, [select]);
 
@@ -47,9 +59,9 @@ const SearchBar: React.FC<ISearchBarProps> = ({
       {
         displayExhibitors.map((exhibitor: IExhibitors) => (
           <Card
-            key={`row-${exhibitor.exhibitorId}`}
+            key={`row-${exhibitor.id}`}
             image={exhibitor.picture}
-            name={exhibitor.name}
+            name={exhibitor.firstname}
             category={exhibitor.category}
             emplacement={exhibitor.emplacement}
           />
