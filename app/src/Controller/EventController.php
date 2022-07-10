@@ -13,7 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+#[IsGranted('ROLE_USER')]
 #[Route('/api/event')]
 class EventController extends AbstractController
 {
@@ -50,7 +52,6 @@ class EventController extends AbstractController
         $event->setAddress($parameters['address']);
         $event->setStartDate($parameters['startDate']);
         $event->setEndDate($parameters['endDate']);
-        $event->setUser($userFinded);
 
         $entityManager->persist($user);
         $entityManager->flush();

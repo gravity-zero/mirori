@@ -16,6 +16,7 @@ use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Firebase\JWT\JWT;
 
+#[IsGranted('ROLE_USER')]
 class SecurityController extends AbstractController
 {
 
