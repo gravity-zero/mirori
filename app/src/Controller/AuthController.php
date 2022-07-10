@@ -16,7 +16,6 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
-#[IsGranted('ROLE_USER')]
 class AuthController extends AbstractController
 {
     private SerializerInterface $serializer;
