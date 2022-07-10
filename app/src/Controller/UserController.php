@@ -19,7 +19,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+#[IsGranted('ROLE_USER')]
 #[Route('/api/user')]
 class UserController extends AbstractController
 {
