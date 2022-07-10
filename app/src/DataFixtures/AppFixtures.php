@@ -48,6 +48,16 @@ class AppFixtures extends Fixture
         $manager->persist($user);
         $manager->persist($event);
 
+        $user = new User();
+        $user->setCompany('society');
+        $user->setPhone('0652789654');
+        $user->setPassword($this->passwordEncoder->encodePassword($user, "123456"));
+        $user->setEmail('admin@admin.fr');
+        $user->setRoles(['ROLE_ADMIN']);
+        $user->setEvent($event);
+        $manager->persist($user);
+        $manager->persist($event);
+
         for ($i = 0; $i < 20; $i++) {
             $user = new User();
             $user->setCompany('society_'.$i);
