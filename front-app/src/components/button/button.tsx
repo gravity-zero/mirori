@@ -1,7 +1,7 @@
 import React, {
   MouseEvent,
 } from 'react';
-import { ButtonStyled } from './button-style';
+import { ButtonStyled } from './styledButton';
 
 export interface IButtonProps {
   label: string;

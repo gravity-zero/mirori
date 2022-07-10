@@ -1,9 +1,11 @@
-import { ILocation } from './location.interface';
+//import { ILocation } from './location.interface';
 
 export interface IExhibitors {
   id?: string;
   picture?: string;
   firstname: string;
+  lastname: string;
   category?: string;
-  emplacement?: ILocation;
+  alley: number;
+  place: number;
 }

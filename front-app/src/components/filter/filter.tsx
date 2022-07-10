@@ -1,5 +1,5 @@
 import React from 'react';
-import { IExhibitors } from '../../models/exhibitors.interface';
+import { IExhibitors } from '../../Interfaces/exhibitors.interface';
 import { SelectContainer } from './filter-style';
 
 export interface ISelectProps {

@@ -1,17 +1,20 @@
 import React from 'react';
-import { ILocation } from '../../models/location.interface';
+import { ILocation } from '../../Interfaces/location.interface';
 import { CardContainer, InfoContainer, Link, StyledText, StyledTextLabel } from './cardMobile-style';
 
 export interface ICardMobileProps {
   name: string;
   category?: string;
-  location?: ILocation;
+  // location?: ILocation;
+  alley: number;
+  place: number;
 }
 
 const CardMobile: React.FC<ICardMobileProps> = ({
   name,
   category,
-  location
+  alley,
+  place,
 }) => {
 
   return (
@@ -23,7 +26,7 @@ const CardMobile: React.FC<ICardMobileProps> = ({
         <StyledTextLabel>Catégorie</StyledTextLabel><StyledText>{category}</StyledText>
       </InfoContainer>
       <InfoContainer>
-        <StyledTextLabel>Emplacement</StyledTextLabel><StyledText>Allé {location?.alley} - Place {location?.place}</StyledText>
+        <StyledTextLabel>Emplacement</StyledTextLabel><StyledText>Allé {alley} - Place {place}</StyledText>
       </InfoContainer>
       <Link href="">Voir le plan</Link>
 
