@@ -60,6 +60,7 @@ class AppFixtures extends Fixture
         $user->setEmail('admin@admin.fr');
         $user->setRoles(['ROLE_ADMIN']);
         $user->setEvent($event);
+        $user->setDescription('descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription');
         $manager->persist($user);
         $manager->persist($event);
 
@@ -72,6 +73,7 @@ class AppFixtures extends Fixture
             $user->setPassword($this->passwordEncoder->encodePassword($user, "123456"));
             $user->setEmail($i.'hihi@woot.fr');
             $user->setRoles(['ROLE_EXPOSANT']);
+            $user->setDescription('descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription');
             $user->setCategory('agriculture');
             $user->setPicture('https://previews.123rf.com/images/andreykuzmin/andreykuzmin1204/andreykuzmin120400114/13323229-b%C3%A9b%C3%A9-chat-d-un-mois.jpg');
             $user->setEvent($event);

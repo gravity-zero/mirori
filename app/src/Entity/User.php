@@ -57,6 +57,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Booking::class)]
     private $bookings;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $description;
+
     #[ORM\Embedded(class: 'Location')]
     private Location $location;
 
@@ -237,6 +240,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFirstname(?string $firstname): self
     {
         $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
