@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\Booking;
+use App\Entity\Location;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -37,12 +39,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $category;
 
     #[ORM\Column(type: 'string', length: 180, nullable: true)]
-    private $alley;
-
-    #[ORM\Column(type: 'string', length: 180, nullable: true)]
-    private $place;
-
-    #[ORM\Column(type: 'string', length: 180, nullable: true)]
     private $company;
 
     #[ORM\Column(type: 'json')]
@@ -61,11 +57,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Booking::class)]
     private $bookings;
 
+    #[ORM\Embedded(class: 'Location')]
+    private Location $location;
+
     public function __construct()
     {
         $this->booking = new ArrayCollection();
         $this->bookings = new ArrayCollection();
+        $this->location = new Location();
     }
+    
 
     public function getId(): ?int
     {
@@ -104,6 +105,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCompany(string $company): self
     {
         $this->company = $company;
+
+        return $this;
+    }
+
+    public function getLocation(): Location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(Location $location): self
+    {
+        $this->location = $location;
 
         return $this;
     }
@@ -212,30 +225,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCategory(?string $category): self
     {
         $this->category = $category;
-
-        return $this;
-    }
-
-    public function getAlley(): ?string
-    {
-        return $this->alley;
-    }
-
-    public function setAlley(?string $alley): self
-    {
-        $this->alley = $alley;
-
-        return $this;
-    }
-
-    public function getPlace(): ?string
-    {
-        return $this->place;
-    }
-
-    public function setPlace(?string $place): self
-    {
-        $this->place = $place;
 
         return $this;
     }
