@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Entity\Location;
 use App\Entity\Questions;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -41,6 +42,8 @@ class AppFixtures extends Fixture
         $user = new User();
         $user->setCompany('society');
         $user->setPhone('0656789654');
+        $user->setFirstname('orga');
+        $user->setLastname('nisateur');
         $user->setPassword($this->passwordEncoder->encodePassword($user, "123456"));
         $user->setEmail('haha@outlook.fr');
         $user->setRoles(['ROLE_ORGANISATEUR']);
@@ -50,6 +53,8 @@ class AppFixtures extends Fixture
 
         $user = new User();
         $user->setCompany('society');
+        $user->setFirstname('admin');
+        $user->setLastname('admin');
         $user->setPhone('0652789654');
         $user->setPassword($this->passwordEncoder->encodePassword($user, "123456"));
         $user->setEmail('admin@admin.fr');
@@ -61,15 +66,17 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 20; $i++) {
             $user = new User();
             $user->setCompany('society_'.$i);
+            $user->setFirstname('Hanalaboloss');
+            $user->setLastname('ismaleplusbeau');
             $user->setPhone($i.'0654789654');
             $user->setPassword($this->passwordEncoder->encodePassword($user, "123456"));
             $user->setEmail($i.'hihi@woot.fr');
             $user->setRoles(['ROLE_EXPOSANT']);
             $user->setCategory('agriculture');
             $user->setPicture('https://previews.123rf.com/images/andreykuzmin/andreykuzmin1204/andreykuzmin120400114/13323229-b%C3%A9b%C3%A9-chat-d-un-mois.jpg');
-            $user->setAlley($i);
-            $user->setPlace($i+20);
             $user->setEvent($event);
+            $user->getLocation()->setAlley($i);
+            $user->getLocation()->setPlace($i+20);
             $manager->persist($user);
         }
 
@@ -82,8 +89,6 @@ class AppFixtures extends Fixture
             $user->setRoles(['ROLE_VISITOR']);
             $user->setCategory('agriculture');
             $user->setPicture('https://previews.123rf.com/images/andreykuzmin/andreykuzmin1204/andreykuzmin120400114/13323229-b%C3%A9b%C3%A9-chat-d-un-mois.jpg');
-            $user->setAlley($i);
-            $user->setPlace($i+20);
             $user->setEvent($event);
             $manager->persist($user);
         }
