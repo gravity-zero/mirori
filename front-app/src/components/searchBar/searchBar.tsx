@@ -1,13 +1,14 @@
 import React, {
   useState,
   useEffect,
+  useContext,
 } from 'react';
-import { IExhibitors } from '../../models/exhibitors.interface';
+import { IExhibitors } from '../../Interfaces/exhibitors.interface';
 import Card from '../card/card';
-import Select from '../filter/filter';
-import { Container, StyledInput } from './searchBar-style';
+import { Container, StyledInput } from './styledSearchBar';
 import useGetExhibitors from '../../Hook/useGetExhibitors';
-
+import { valueContext } from '../../Context/useIsMobile';
+import CardMobile from '../card/cardMobile';
 
 export interface ISearchBarProps {
   className?: string;
@@ -23,13 +24,12 @@ const SearchBar: React.FC<ISearchBarProps> = ({
   const [displayExhibitors, setDisplayExhibitors] = useState<IExhibitors[]>(exhibitors);
   const [select, setSelect] = useState('')
 
-  const getExhibitors = useGetExhibitors()
+  const getExhibitors = useGetExhibitors();
+  const value = useContext(valueContext);
 
-
-
-  const handleChange = (event: any) => {
-    setSelect(event.currentTarget.value);
-  };
+  // const handleChange = (event: any) => {
+  //   setSelect(event.currentTarget.value);
+  // };
 
   useEffect(() => {
     getExhibitors()
@@ -56,14 +56,27 @@ const SearchBar: React.FC<ISearchBarProps> = ({
       <Container>
         <StyledInput type="text" placeholder={placeholder} className={className} onChange={(e: any) => setSearchTerm(e.target.value.toLowerCase())} />
       </Container>
-      {
+
+      {value ?
+
         displayExhibitors.map((exhibitor: IExhibitors) => (
           <Card
             key={`row-${exhibitor.id}`}
             image={exhibitor.picture}
             name={exhibitor.firstname}
             category={exhibitor.category}
-            emplacement={exhibitor.emplacement}
+            alley={exhibitor.alley}
+            place={exhibitor.place}
+          />
+        ))
+        :
+        displayExhibitors.map((exhibitor: IExhibitors) => (
+          <CardMobile
+            key={`row-${exhibitor.id}`}
+            name={exhibitor.firstname}
+            category={exhibitor.category}
+            alley={exhibitor.alley}
+            place={exhibitor.place}
           />
         ))
       }

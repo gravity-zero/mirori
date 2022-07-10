@@ -1,9 +1,7 @@
 import React from 'react';
 import { HeaderContainer, DateContainer, HourContainer } from './header-style';
 
-export interface IHeaderProps {
-
-}
+export interface IHeaderProps { }
 
 const Header: React.FC<IHeaderProps> = () => {
 
@@ -17,7 +15,7 @@ const Header: React.FC<IHeaderProps> = () => {
         <p>{date.getDate()}</p>
         <p>{month[date.getMonth()]}</p>
       </DateContainer>
-      <img src="logo1.png" alt="" />
+      <img src="assets/image/logo.png" alt="" />
       <HourContainer>{date.getHours()} : {date.getHours()}</HourContainer>
     </HeaderContainer>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Modal from '../../modal/modal'
+import Modal from '../../Modals/modal'
 
 export interface ISubscriptionProps { }
 

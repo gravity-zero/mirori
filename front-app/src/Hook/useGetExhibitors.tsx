@@ -1,5 +1,5 @@
-import { IExhibitors } from '../models/exhibitors.interface';
-import httpClient from '../service/api/httpClient';
+import { IExhibitors } from '../Interfaces/exhibitors.interface';
+import httpClient from './httpClient';
 
 export default function useGetExhibitors() {
   return (): Promise<IExhibitors[]> => {
