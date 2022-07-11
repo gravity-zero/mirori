@@ -1,17 +1,30 @@
 /* @font-face{
   font-family: 'Montserrat-Medium';
+<<<<<<< HEAD
   src: url("/front-app/public/assets/fonts/Montserrat-Medium.ttf") format('ttf'), 
+=======
+  src: url('./fonts/Montserrat/Montserrat-Medium.ttf') format('ttf'), 
+>>>>>>> 358660b (feat: add menu buttons)
 }
 
 @font-face{
   font-family: 'Montserrat-Regular';
+<<<<<<< HEAD
   src: url('/front-app/public/assets/fonts/Montserrat-Regular.ttf') format('ttf'), 
+=======
+  src: url('./fonts/Montserrat/Montserrat-Regular.ttf') format('ttf'), 
+>>>>>>> 358660b (feat: add menu buttons)
 }
 
 @font-face{
   font-family: 'Montserrat-SemiBold';
+<<<<<<< HEAD
   src: url('/front-app/public/assets/fonts/Montserrat-SemiBold.ttf format'('ttf'), 
 } */
+=======
+  src: url('./fonts/Montserrat/Montserrat-SemiBold.ttf') format('ttf'), 
+}
+>>>>>>> 358660b (feat: add menu buttons)
 
 body,
 p {
