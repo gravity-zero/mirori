@@ -5,10 +5,8 @@ import React, {
 } from 'react';
 import { IExhibitors } from '../../Interfaces/exhibitors.interface';
 import Card from '../card/card';
-import { Container, StyledInput } from './styledSearchBar';
+import { CardsContainer, Container, StyledInput } from './styledSearchBar';
 import useGetExhibitors from '../../Hook/useGetExhibitors';
-import { valueContext } from '../../Context/useIsMobile';
-import CardMobile from '../card/cardMobile';
 
 export interface ISearchBarProps {
   className?: string;
@@ -25,7 +23,6 @@ const SearchBar: React.FC<ISearchBarProps> = ({
   const [select, setSelect] = useState('')
 
   const getExhibitors = useGetExhibitors();
-  const value = useContext(valueContext);
 
   // const handleChange = (event: any) => {
   //   setSelect(event.currentTarget.value);
@@ -56,30 +53,17 @@ const SearchBar: React.FC<ISearchBarProps> = ({
       <Container>
         <StyledInput type="text" placeholder={placeholder} className={className} onChange={(e: any) => setSearchTerm(e.target.value.toLowerCase())} />
       </Container>
-
-      {value ?
-
-        displayExhibitors.map((exhibitor: IExhibitors) => (
-          <Card
-            key={`row-${exhibitor.id}`}
-            image={exhibitor.picture}
-            name={exhibitor.firstname}
-            category={exhibitor.category}
-            alley={exhibitor.alley}
-            place={exhibitor.place}
-          />
-        ))
-        :
-        displayExhibitors.map((exhibitor: IExhibitors) => (
-          <CardMobile
-            key={`row-${exhibitor.id}`}
-            name={exhibitor.firstname}
-            category={exhibitor.category}
-            alley={exhibitor.alley}
-            place={exhibitor.place}
-          />
-        ))
-      }
+      <CardsContainer>
+        {
+          displayExhibitors.map((exhibitor: IExhibitors) => (
+            <Card
+              key={`row-${exhibitor.id}`}
+              image={exhibitor.picture}
+              name={exhibitor.firstname}
+            />
+          ))
+        }
+      </CardsContainer>
     </div>
   );
 }

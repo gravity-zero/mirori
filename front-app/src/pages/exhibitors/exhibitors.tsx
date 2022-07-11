@@ -22,14 +22,16 @@ const Exhibitors: React.FC = () => {
 
   return (
     <div>
-      <Header></Header>
-      <ExhibitorsContainer>
-        <ValueContextProvider>
+      <ValueContextProvider>
+        <Header></Header>
+        <ExhibitorsContainer>
+
           <SearchBar
             placeholder="Rechercher un exposant"></SearchBar>
-        </ValueContextProvider>
-      </ExhibitorsContainer>
-      {/* <Subscription></Subscription> */}
+
+        </ExhibitorsContainer>
+        {/* <Subscription></Subscription> */}
+      </ValueContextProvider>
     </div>
 
   )
