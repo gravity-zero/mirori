@@ -17,6 +17,7 @@ function App() {
   return (
     <div className="App">
 <<<<<<< HEAD
+<<<<<<< HEAD
       <Routes>
         <Route path='visitors/facialRecognitionLoading' element={<Loading />} ></Route>
         <Route path='visitors/facialRecognitionFailed' element={<Loading />} ></Route>
@@ -28,6 +29,14 @@ function App() {
 =======
       <NavigationBar></NavigationBar>
 >>>>>>> 358660b (feat: add menu buttons)
+=======
+      <NavigationBar
+      onClickHome={() => console.log("You clicked on onClickHome")}
+      onClickSearch={() => console.log("You clicked on onClickSearch")}
+      onClickAgenda={() => console.log("You clicked on onClickAgenda")}
+      onClickRecommendation={() => console.log("You clicked on onClickRecommendation")}
+      ></NavigationBar>
+>>>>>>> 10b8b65 (Feat: Handles clicks on menu buttons)
     </div>
   );
 }

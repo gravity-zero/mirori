@@ -5,35 +5,47 @@ import magnifier from '../../assets/magnifier.png';
 import agenda from '../../assets/agenda.png';
 import heart from '../../assets/heart.png';
 
+interface NavigationBarProps {
+    onClickHome?: () => void;
+    onClickSearch?: () => void;
+    onClickAgenda?: () => void;
+    onClickRecommendation?: () => void;
+  }
 
-
-const NavigationBar = () => (
+const NavigationBar: React.FC<NavigationBarProps> = ({ 
+    onClickHome,
+    onClickSearch,
+    onClickAgenda,
+    onClickRecommendation
+}) => { 
+    return (
     <StyledNavBar>
-        <ButtonMenu>
+        <ButtonMenu onClick={onClickHome}>
             <Wrap>
                 <img width='70px' src={home} alt="home" />
                 <StyledText>ACCEUIL</StyledText>
             </Wrap>
         </ButtonMenu>
-        <ButtonMenu>
+        <ButtonMenu onClick={onClickSearch}>
             <Wrap>
                 <img width='70px' src={magnifier} alt="magnifier" />
                 <StyledText>RECHERCHE</StyledText>
             </Wrap>
         </ButtonMenu>
-        <ButtonMenu>
+        <ButtonMenu onClick={onClickAgenda}>
             <Wrap>
                 <img width='70px' src={agenda} alt="agenda" />
                 <StyledText>AGENDA</StyledText>
             </Wrap>
         </ButtonMenu>
-        <ButtonMenu>
+        <ButtonMenu onClick={onClickRecommendation}>
             <Wrap>
                 <img width='70px' src={heart} alt="heart" />
                 <StyledText>RECOMMANDATION</StyledText>
             </Wrap>
         </ButtonMenu>
-</StyledNavBar>
-);
+    </StyledNavBar>
+    );
+}
 
 export default NavigationBar;
