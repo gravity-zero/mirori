@@ -1,5 +1,6 @@
 import React from 'react';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Routes, Route } from 'react-router-dom'
 import Exhibitors from './Pages/visitors/exhibitors/exhibitors';
 import Loading from './Pages/visitors/loading';
@@ -10,12 +11,16 @@ import Schedule from './Pages/visitors/schedule/schedule';
 
 =======
 import NavigationBar from './components/navigationBar/menu';
+=======
+import NavigationBarMiror from './components/navigationBarMiror/navMiror';
+>>>>>>> 7df28c8 (create miror menu component)
 import './fonts/Montserrat/Montserrat-Regular.ttf';
 >>>>>>> 358660b (feat: add menu buttons)
 
 function App() {
   return (
     <div className="App">
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       <Routes>
@@ -37,6 +42,14 @@ function App() {
       onClickRecommendation={() => console.log("You clicked on onClickRecommendation")}
       ></NavigationBar>
 >>>>>>> 10b8b65 (Feat: Handles clicks on menu buttons)
+=======
+      <NavigationBarMiror
+      onClickHome={() => console.log("You clicked on onClickHome")}
+      onClickSearch={() => console.log("You clicked on onClickSearch")}
+      onClickAgenda={() => console.log("You clicked on onClickAgenda")}
+      onClickRecommendation={ () => console.log("You clicked on onClickRecommendation")}
+      ></NavigationBarMiror>
+>>>>>>> 7df28c8 (create miror menu component)
     </div>
   );
 }

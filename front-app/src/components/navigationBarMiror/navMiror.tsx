@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledNavBar, StyledText, ButtonMenu, Wrap } from './style';
+import { StyledNavBarMobile, StyledText, ButtonMenu, Wrap } from './style';
 import home from '../../assets/home-icon.png';
 import magnifier from '../../assets/magnifier.png';
 import agenda from '../../assets/agenda.png';
@@ -12,14 +12,14 @@ interface NavigationBarProps {
     onClickRecommendation?: () => void;
   }
 
-const NavigationBar: React.FC<NavigationBarProps> = ({ 
+const NavigationBarMiror: React.FC<NavigationBarProps> = ({ 
     onClickHome,
     onClickSearch,
     onClickAgenda,
     onClickRecommendation
 }) => { 
     return (
-    <StyledNavBar>
+    <StyledNavBarMobile>
         <ButtonMenu onClick={onClickHome}>
             <Wrap>
                 <img width='70px' src={home} alt="home" />
@@ -44,8 +44,8 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                 <StyledText>RECOMMANDATION</StyledText>
             </Wrap>
         </ButtonMenu>
-    </StyledNavBar>
+    </StyledNavBarMobile>
     );
 }
 
-export default NavigationBar;
+export default NavigationBarMiror;

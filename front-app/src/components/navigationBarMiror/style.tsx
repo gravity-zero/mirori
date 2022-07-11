@@ -1,7 +1,7 @@
 import { theme } from '../../styles/theme';
 import styled from 'styled-components';
 
-export const StyledNavBar = styled.nav`
+export const StyledNavBarMobile = styled.nav`
     display: flex;
     height: 150px;
 `
