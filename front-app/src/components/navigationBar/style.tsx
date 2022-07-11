@@ -3,27 +3,34 @@ import styled from 'styled-components';
 
 export const StyledNavBar = styled.nav`
     display: flex;
-    position: relative;
-
     height: 150px;
-    background: red;
-    justify-content: space-between;
 `
 
 export const StyledText = styled.text`
-    font-family: 'Montserrat-Regular';
+    @font-face{
+        font-family: 'Montserrat-Regular';
+        src: url('./fonts/Montserrat/Montserrat-Regular.ttf') format('truetype'), 
+    }
     font-style: normal;
-    font-weight: 400;
-    font-size: 36px;
+    font-weight: 40;
+    font-size: 15px;
     line-height: 30px;
-
     font-variant: small-caps;
-
     color: #2C2C2C;
+    
 `
 export const ButtonMenu = styled.button`
     display: block;
-    color: black;
     width: 100%;
-
+    border: none;
+    align-items: center;
+    background-color: white;
 `
+
+export const Wrap = styled.nav`
+    width: 30%;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: auto;
+`
+
