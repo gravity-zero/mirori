@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageContainer } from '../Styled/styledLoading'
+import { ImageContainer } from '../styled/styledLoading'
 
 const Loading: React.FC = () => {
   return (
