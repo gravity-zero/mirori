@@ -10,6 +10,7 @@ import ValueContextProvider from './Context/useIsMobile';
 import Header from './components/header/header';
 import FacialRecognitionFailed from './pages/visitors/facialRecognitionFailed';
 import StandbyMode from './pages/visitors/standbyMode';
+import AuthFacialRecognition from './pages/visitors/authFacialRecognition';
 
 
 
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path='visitors/facialRecognitionLoading' element={<Loading />} ></Route>
           <Route path='visitors/facialRecognitionFailed' element={<FacialRecognitionFailed />} ></Route>
+          <Route path='visitors/authFacialRecognition' element={<AuthFacialRecognition />} ></Route>
           <Route path='/' element={<Home />} ></Route>
           <Route path='visitors/exhibitors' element={<Exhibitors />} ></Route>
           <Route path='visitors/events' element={<Events />} ></Route>
