@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-const API_URL = 'https://mirori.gravity-zero.fr/api/';
+const API_URL = 'https://mirori.gravity-zero.fr/';
 
-const httpClient = axios.create({
+export const httpClient = axios.create({
   baseURL: `${API_URL}`,
   headers: { 'Content-Type': 'application/json' },
 });
+
+
 
 export default httpClient;

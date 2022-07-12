@@ -53,5 +53,4 @@ export const HourContainer = styled.div`
   @media ${device.lg} {
     font-size: 48px;
   }
-
 `; 

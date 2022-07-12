@@ -23,7 +23,6 @@ export const StyledInput = styled.input`
   }
 
   @media ${device.lg} {
-
     height: 129px;
     font-size: 48px;
   }
@@ -49,6 +48,3 @@ export const CardsContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
 `;
-
-
-
