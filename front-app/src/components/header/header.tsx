@@ -1,7 +1,7 @@
-import React, {useContext} from 'react';
-import { HeaderContainer, DateContainer, HourContainer, ImageContainer} from './styledHeader';
+import React, { useContext } from 'react';
+import { HeaderWrapper, DateContainer, HourContainer, ImageContainer, HeaderContainer } from './styledHeader';
 import { valueContext } from '../../Context/useIsMobile';
-
+import Nav from '../nav/nav'
 
 export interface IHeaderProps { }
 
@@ -9,28 +9,25 @@ const Header: React.FC<IHeaderProps> = () => {
 
   const date = new Date();
   const month = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-  const value = useContext(valueContext);  
+  const value = useContext(valueContext);
   console.log(value);
-  
+
 
   return (
     <HeaderContainer>
-      {!value ? 
-      <DateContainer>
-        <p>{date.getDate()}</p>
-        <p>{month[date.getMonth()]}</p>
-      </DateContainer>
-      : <div></div>}
-      <ImageContainer src="assets/image/logo.svg" alt="" />
-
-      {!value ? 
-      <HourContainer>{date.getHours()} : {date.getMinutes()}</HourContainer> 
-      : <div></div>
-      }
-  
+      {!value && (
+        <HeaderWrapper>
+          <DateContainer>
+            <p>{date.getDate()}</p>
+            <p>{month[date.getMonth()]}</p>
+          </DateContainer>
+          <ImageContainer src="/assets/image/logo.svg" alt="" />
+          <HourContainer>{date.getHours()} : {date.getMinutes()}</HourContainer>
+        </HeaderWrapper>
+      )}
+      <Nav></Nav>
     </HeaderContainer>
-
-  );
+  )
 }
 
 export default Header;

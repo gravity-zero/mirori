@@ -8,6 +8,13 @@ const ValueContextProvider = (props: any) => {
   const [width, setWidth] = useState<number>()
 
   useEffect(() => {
+    window.addEventListener("resize", () => {
+      setWidth(window.screen.width)
+    })
+  })
+
+
+  useEffect(() => {
     setWidth(window.screen.width);
     if (width && width < 980) {
       setIsMobile(true)

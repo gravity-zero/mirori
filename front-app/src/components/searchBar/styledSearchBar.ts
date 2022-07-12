@@ -18,9 +18,8 @@ export const StyledInput = styled.input`
   font-size: 16px;
 
   @media ${device.md} {
-
     height: 90px;
-    font-size: 38px;
+    font-size: 24px;
   }
 
   @media ${device.lg} {
@@ -36,10 +35,10 @@ export const StyledInput = styled.input`
     padding-left: 20px;
 
     @media ${device.md} {
-      font-size: 38px;
+      font-size: 24px;
     }
 
-    @media ${device.md} {
+    @media ${device.lg} {
       font-size: 48px;
     }
   }
