@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Repository\EventRepository;
+use App\Repository\BookingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -214,5 +215,17 @@ class UserController extends AbstractController
         return new JsonResponse([
             'success_message' => 'Edit success'
         ]);
+    }
+
+    #[Route('/{id}/booking', name: 'user_get_booking', methods: ['GET'])]
+    public function getUserBooking(BookingRepository $bookingRepository, $id): Response
+    {
+        // A factoriser
+        return new JsonResponse(
+            $this->serializer->serialize($bookingRepository->findBy(['users' => $id]), 'json', [
+            'circular_reference_handler' => function ($object) {
+                return $object->getId();
+         }]
+        ), 201, [], true );
     }
 }

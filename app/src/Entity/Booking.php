@@ -29,6 +29,10 @@ class Booking
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'bookings')]
     private $users;
 
+    #[ORM\ManyToOne(targetEntity: user::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private $exhibitor;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +94,18 @@ class Booking
     public function setUsers(?User $users): self
     {
         $this->users = $users;
+
+        return $this;
+    }
+
+    public function getExhibitor(): ?user
+    {
+        return $this->exhibitor;
+    }
+
+    public function setExhibitorId(?user $exhibitor): self
+    {
+        $this->exhibitor = $exhibitor;
 
         return $this;
     }
