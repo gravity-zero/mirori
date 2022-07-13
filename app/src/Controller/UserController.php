@@ -103,7 +103,15 @@ class UserController extends AbstractController
 
         $user->setEmail($parameters['email']);
         $user->setPhone($parameters['phone']);
-        $user->setCompany($parameters['company']);
+        $user->setCompany($parameters['company'] ?? null);
+        $user->setFirstname($parameters['firstname']?? null);
+        $user->setLastname($parameters['lastname']?? null);
+        $user->setPicture($parameters['picture']?? null);
+        $user->setCategory($parameters['category']?? null);
+        $user->setRgpd($parameters['rgpd']?? null);
+        $user->setDescription($parameters['description']?? null);
+        $user->getLocation()->setAlley($parameters['alley']?? null);
+        $user->getLocation()->setPlace($parameters['place']?? null);
         $user->setPassword(
             $passwordEncoder->encodePassword(
                 $user,
