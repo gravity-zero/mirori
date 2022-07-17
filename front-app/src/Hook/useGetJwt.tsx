@@ -1,7 +1,8 @@
 const API_URL = 'https://mirori.gravity-zero.fr/';
 
-function useAuthVisitor() {
-  fetch(`${API_URL}auth/login`, {
+function useGetJwt() {
+
+  return fetch(`${API_URL}auth/login`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -12,7 +13,6 @@ function useAuthVisitor() {
     )
   })
     .then(data => data.json())
-    .then(response => console.log(response.token))
 }
 
-export default useAuthVisitor
+export default useGetJwt

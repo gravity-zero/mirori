@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import QRCode from "react-qr-code";
 import { ModalContainer } from './styledModal';
+import { valueToken } from '../Context/useIsLogin';
 
 
 export interface IModalProps {
@@ -10,10 +11,10 @@ export interface IModalProps {
 const Modal: React.FC<IModalProps> = ({
   setOpenModal,
 
-
 }) => {
 
-  const value = 'http://mirori-app.gravity-zero.fr:3000/exhibitors';
+  const jwt = useContext(valueToken);
+  const value = `https://mirori.gravity-zero.fr/visitor/auth/${jwt}`;
 
   return (
     <ModalContainer>
