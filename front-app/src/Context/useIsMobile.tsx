@@ -13,7 +13,6 @@ const ValueContextProvider = (props: any) => {
     })
   })
 
-
   useEffect(() => {
     setWidth(window.screen.width);
     if (width && width < 980) {

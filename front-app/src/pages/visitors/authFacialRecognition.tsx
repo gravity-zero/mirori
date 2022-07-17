@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import useGetJwtParam from '../../Hook/useGetJwtParam';
 
 
-const Loading: React.FC = () => {
+const AuthFacialRecognition: React.FC = () => {
+  const tokenParam = useGetJwtParam();
+  const [jwt, setJwt] = useState<any>()
+
+  useEffect(() => setJwt(tokenParam))
+
   return (
-    <h1>Route jwt Auth reconnaissance facial </h1>
+    <div>
+      <h1>Route jwt Auth reconnaissance facial</h1>
+      <p>Value of term: {jwt}</p>
+    </div>
   )
 }
 
-export default Loading;
+export default AuthFacialRecognition;
+
