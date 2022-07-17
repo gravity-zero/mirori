@@ -1,6 +1,6 @@
 import React from 'react';
 import { IExhibitors } from '../../Interfaces/exhibitors.interface';
-import { SelectContainer } from './filter-style';
+import { SelectContainer } from './styledFilter';
 
 export interface ISelectProps {
   handleChange: any;

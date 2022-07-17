@@ -1,19 +1,36 @@
-import React from 'react';
+import React, { useContext } from 'react';
+// import { valueContext } from './Context/useIsMobile';
 import { Routes, Route } from 'react-router-dom'
-import Exhibitors from './Pages/exhibitors/exhibitors';
-import Loading from './Pages/exhibitors/loading';
+import Exhibitors from './pages/visitors/exhibitors/exhibitors';
+import Loading from './pages/visitors/loading';
+import Home from './pages/visitors/home/home';
+import Events from './pages/visitors/events/events';
+import Schedule from './pages/visitors/schedule/schedule';
+import ValueContextProvider from './Context/useIsMobile';
+import Header from './components/header/header';
+import FacialRecognitionFailed from './pages/visitors/facialRecognitionFailed';
+import StandbyMode from './pages/visitors/standbyMode';
+import AuthFacialRecognition from './pages/visitors/authFacialRecognition';
 
 
 
 function App() {
+
   return (
     <div className="App">
-      <Routes>
-        <Route path='/exhibitors' element={<Exhibitors />} ></Route>
-        <Route path='visitors/facialRecognitionLoading' element={<Loading />} ></Route>
-        <Route path='visitors/facialRecognitionFailed' element={<Loading />} ></Route>
-        <Route path='/facialRecognitionFailed' element={<Loading />} ></Route>
-      </Routes>
+      <ValueContextProvider>
+        <Header />
+        <Routes>
+          <Route path='visitors/facialRecognitionLoading' element={<Loading />} ></Route>
+          <Route path='visitors/facialRecognitionFailed' element={<FacialRecognitionFailed />} ></Route>
+          <Route path='visitors/authFacialRecognition' element={<AuthFacialRecognition />} ></Route>
+          <Route path='/' element={<Home />} ></Route>
+          <Route path='visitors/exhibitors' element={<Exhibitors />} ></Route>
+          <Route path='visitors/events' element={<Events />} ></Route>
+          <Route path='visitors/schedule' element={<Schedule />} ></Route>
+          <Route path='visitors/standbyMode' element={<StandbyMode />} ></Route>
+        </Routes>
+      </ValueContextProvider>
     </div>
   );
 }
