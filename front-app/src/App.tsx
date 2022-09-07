@@ -13,11 +13,9 @@ import StandbyMode from './pages/visitors/standbyMode';
 import AuthFacialRecognition from './pages/visitors/authFacialRecognition';
 
 function App() {
-  const mobile = ValueContextProvider;
   return (
     <div className="App">
       <ValueContextProvider>
-        {!mobile useContext(ScrollMouse)}
         <Header />
         <Routes>
           <Route path='visitors/facialRecognitionLoading' element={<Loading />} ></Route>

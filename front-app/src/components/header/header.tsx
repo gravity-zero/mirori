@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { HeaderWrapper, DateContainer, HourContainer, ImageContainer, HeaderContainer } from './styledHeader';
 import { valueContext } from '../../Context/useIsMobile';
 import Nav from '../nav/nav'
@@ -7,24 +7,35 @@ export interface IHeaderProps { }
 
 const Header: React.FC<IHeaderProps> = () => {
 
-  const date = new Date();
-  const month = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
-  const value = useContext(valueContext);
-  console.log(value);
+  const [date, setDate] = useState<Date>(new Date());
 
+  useEffect(() => {
+    setInterval( () =>
+      setDate(new Date())
+    , 60000)
+  }, [date]);
 
-  return (
-    <HeaderContainer>
-      {!value && (
+  const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+
+  let day = ('0' + date.getDate()).slice(-2);
+  let month = months[date.getMonth()];
+  let hours = ('0' + date.getHours()).slice(-2);
+  let minutes = ('0' + date.getMinutes()).slice(-2);
+  let hours_minutes = hours+" : "+minutes;
+
+  const mobile = useContext(valueContext);
+
+  return ( <HeaderContainer>
+      {!mobile && (
         <HeaderWrapper>
           <DateContainer>
-            <p>{date.getDate()}</p>
-            <p>{month[date.getMonth()]}</p>
+            <p>{ day }</p>
+            <p>{ month }</p>
           </DateContainer>
           <a href="/">
           <ImageContainer src="/assets/image/logo.svg" alt="logo Mirori" />
           </a>
-          <HourContainer>{date.getHours()} : {date.getMinutes()}</HourContainer>
+          <HourContainer>{ hours_minutes }</HourContainer>
         </HeaderWrapper>
       )}
       <Nav></Nav>
