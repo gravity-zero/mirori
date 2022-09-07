@@ -1,5 +1,5 @@
 function useGetJwt() {
-
+  // Cette fonction ne doit servir qu'à générer un QrCode
   return fetch(`${process.env.REACT_APP_API_URL}auth/login`, {
     method: 'POST',
     headers: {

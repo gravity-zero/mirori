@@ -12,7 +12,7 @@ const Header: React.FC<IHeaderProps> = () => {
   useEffect(() => {
     setInterval( () =>
       setDate(new Date())
-    , 60000)
+    , 30000) //30sec de retard max
   }, [date]);
 
   const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
