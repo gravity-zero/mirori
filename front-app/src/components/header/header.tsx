@@ -21,7 +21,9 @@ const Header: React.FC<IHeaderProps> = () => {
             <p>{date.getDate()}</p>
             <p>{month[date.getMonth()]}</p>
           </DateContainer>
-          <ImageContainer src="/assets/image/logo.svg" alt="" />
+          <a href="/">
+          <ImageContainer src="/assets/image/logo.svg" alt="logo Mirori" />
+          </a>
           <HourContainer>{date.getHours()} : {date.getMinutes()}</HourContainer>
         </HeaderWrapper>
       )}

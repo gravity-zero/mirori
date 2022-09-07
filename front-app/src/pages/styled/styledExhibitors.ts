@@ -1,4 +1,4 @@
-import { theme } from '../../Styles/theme';
+import { theme } from '../../styles/theme';
 import styled from 'styled-components';
 
 export const ExhibitorsContainer = styled.section`

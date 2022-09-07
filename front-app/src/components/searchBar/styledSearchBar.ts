@@ -1,4 +1,4 @@
-import { device, theme } from '../../Styles/theme';
+import { device, theme } from '../../styles/theme';
 import styled from 'styled-components';
 
 export const Container = styled.div`

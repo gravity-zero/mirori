@@ -1,23 +1,23 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom'
+import React, {useContext} from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Exhibitors from './pages/visitors/exhibitors/exhibitors';
 import Loading from './pages/visitors/loading';
 import Home from './pages/visitors/home/home';
 import Events from './pages/visitors/events/events';
 import Schedule from './pages/visitors/schedule/schedule';
 import ValueContextProvider from './Context/useIsMobile';
+import ScrollMouse from './Context/useScrollMouse';
 import Header from './components/header/header';
 import FacialRecognitionFailed from './pages/visitors/facialRecognitionFailed';
 import StandbyMode from './pages/visitors/standbyMode';
 import AuthFacialRecognition from './pages/visitors/authFacialRecognition';
 
-
-
 function App() {
-
+  const mobile = ValueContextProvider;
   return (
     <div className="App">
       <ValueContextProvider>
+        {!mobile useContext(ScrollMouse)}
         <Header />
         <Routes>
           <Route path='visitors/facialRecognitionLoading' element={<Loading />} ></Route>

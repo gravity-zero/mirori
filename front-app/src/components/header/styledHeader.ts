@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme, device } from '../../Styles/theme';
+import { theme, device } from '../../styles/theme';
 
 export const HeaderContainer = styled.div`
   bottom: 0;
