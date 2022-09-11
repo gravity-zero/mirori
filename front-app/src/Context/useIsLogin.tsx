@@ -1,21 +1,38 @@
-import React, { createContext, useEffect, useState } from 'react';
-import useGetJwt from '../Hook/useGetJwt'
+import React, { createContext, ReactElement, ReactNode, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import useGetVisitor from '../Hook/useGetVisitor';
+import useLocalStorage from 'react-localstorage-hook'
 
-export const valueToken = createContext('');
+interface IContextProps {
+  userToken: any;
+  setUserToken: any
+}
 
+export const valueToken = createContext<any>({});
 
 const ValueTokenProvider = (props: any) => {
-  const jwt = useGetJwt();
-  const [userToken, setUserToken] = useState<string>('');
+  // const [values, setValue] = useLocalStorage('', []);
+  // const value = '';
 
-  console.log('here');
+  const [userToken, setUserToken] = useLocalStorage('', [])
+  // const getVisitor = useGetVisitor();
+  // const [visitor, setVisitor] = useState<any>();
+  const navigate = useNavigate()
+
+
   useEffect(() => {
-    jwt.then((response) => {
-      setUserToken(response.token)
-    })
-  })
+    if (userToken) {
+      navigate('/')
+    } else {
+      console.log('404');
+    }
+  }, [userToken]);
 
-  return <valueToken.Provider value={userToken}>{props.children}</valueToken.Provider>;
-
+  return (
+    <valueToken.Provider value={{ userToken, setUserToken }}>
+      {props.children}
+    </valueToken.Provider>
+  )
 }
+
 export default ValueTokenProvider;

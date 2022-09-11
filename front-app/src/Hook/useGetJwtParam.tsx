@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 // @ts-ignore
-function useGetJwtParam(): void {
+function useGetJwtParam() {
 
-  const queryParams = new URLSearchParams(window.location.search)
-  const [term, setTerm] = useState<any>()
+  const [term, setTerm] = useState<string | null>();
+  const jwtParam = useParams()
 
   useEffect(() => {
-    // https://reactgo.com/get-last-segment-url-javascript/  (il n'y as pas de jwt= dans l'url, il y a de forte chance que la method get ne retourne rien)
-    setTerm(queryParams.get("jwt"))
+    console.log(jwtParam.jwt);
+
+    if (jwtParam.jwt) {
+      console.log('on passe ici');
+
+      setTerm(jwtParam.jwt)
+    } else {
+      setTerm('')
+    }
+
   })
   return term
-
 }
+
 export default useGetJwtParam;

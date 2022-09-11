@@ -4,9 +4,11 @@ import { valueToken } from '../Context/useIsLogin';
 const API_URL = 'https://mirori.gravity-zero.fr/';
 
 function useGetVisitor() {
-  const jwt = useContext(valueToken);
+  const context = useContext(valueToken)
+  console.log('toto', context.userToken);
 
-  return fetch(`${API_URL}visitor/auth/${jwt}`, {
+
+  return fetch(`${API_URL}visitor/auth/${context.userToken}`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
