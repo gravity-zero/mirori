@@ -1,14 +1,9 @@
-import { useContext } from 'react';
-import { valueToken } from '../Context/useIsLogin';
-
 const API_URL = 'https://mirori.gravity-zero.fr/';
 
 function useGetVisitor() {
-  const context = useContext(valueToken)
-  console.log('toto', context.userToken);
+  const context = localStorage.getItem('userToken')
 
-
-  return fetch(`${API_URL}visitor/auth/${context.userToken}`, {
+  return fetch(`${API_URL}visitor/auth/${context}`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',

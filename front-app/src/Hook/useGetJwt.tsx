@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 function useGetJwt() {
   // Cette fonction ne doit servir qu'à générer un QrCode
   return fetch('https://mirori.gravity-zero.fr/auth/login', {
