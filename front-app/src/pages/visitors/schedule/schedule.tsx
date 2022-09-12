@@ -1,9 +1,12 @@
 import React from 'react';
+import { MyCalendar } from '../../../components/calendar/calendar';
 
 const Schedule: React.FC = () => {
 
   return (
-    <h1>Agenda</h1>
+    <>
+      <MyCalendar></MyCalendar>
+    </>
   )
 }
 

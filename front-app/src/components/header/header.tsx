@@ -1,18 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { HeaderWrapper, DateContainer, HourContainer, ImageContainer, HeaderContainer } from './styledHeader';
-import { valueContext } from '../../Context/useIsMobile';
-import Nav from '../nav/nav'
+import React, { ReactNode, useContext, useEffect, useState } from 'react';
+import { Wrapper, HeaderWrapper, DateContainer, HourContainer, ImageContainer, HeaderContainer, AvatarContainer, VisitorName, NameContainer } from './styledHeader';
+import Nav from '../nav/nav';
+import { Avatar } from '../avatar/avatar';
+// import { valueToken } from '../../Context/useIsLogin';
 
-export interface IHeaderProps { }
+export interface IHeaderProps {
+  name?: string;
+  children?: ReactNode;
+}
 
-const Header: React.FC<IHeaderProps> = () => {
-
+export const Header: React.FC<IHeaderProps> = ({ name }) => {
   const [date, setDate] = useState<Date>(new Date());
+  // const { isAuthenticated } = useContext(valueToken)
 
   useEffect(() => {
-    setInterval( () =>
+    setInterval(() =>
       setDate(new Date())
-    , 30000) //30sec de retard max
+      , 30000)
   }, [date]);
 
   const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
@@ -21,26 +25,54 @@ const Header: React.FC<IHeaderProps> = () => {
   let month = months[date.getMonth()];
   let hours = ('0' + date.getHours()).slice(-2);
   let minutes = ('0' + date.getMinutes()).slice(-2);
-  let hours_minutes = hours+" : "+minutes;
+  let hour_minutes = hours + " : " + minutes;
 
-  const mobile = useContext(valueContext);
+  // console.log(isAuthenticated)
 
-  return ( <HeaderContainer>
-      {!mobile && (
+  // if (!isAuthenticated) {
+  //   return (
+  //     <HeaderContainer>
+  //       <HeaderWrapper>
+  //         <DateContainer>
+  //           <p>{day}</p>
+  //           <p>{month}</p>
+  //         </DateContainer>
+  //         <a href="/">
+  //           <ImageContainer src="/assets/image/logo.svg" alt="logo Mirori" />
+  //         </a>
+  //         <HourContainer>{hour_minutes}</HourContainer>
+  //       </HeaderWrapper>
+  //     </HeaderContainer>
+  //   );
+  // }
+
+  return (
+    <>
+      <Wrapper>
+        <AvatarContainer>
+          <Avatar />
+          <NameContainer>
+            {/* <VisitorName>{visitorName ? visitorName : undefined}</VisitorName> */}
+            <div><img src="/assets/icons/vectorName.svg" alt="" /></div>
+          </NameContainer>
+        </AvatarContainer>
+      </Wrapper>
+      <HeaderContainer>
         <HeaderWrapper>
           <DateContainer>
-            <p>{ day }</p>
-            <p>{ month }</p>
+            <p>{day}</p>
+            <p>{month}</p>
           </DateContainer>
           <a href="/">
-          <ImageContainer src="/assets/image/logo.svg" alt="logo Mirori" />
+            <ImageContainer src="/assets/image/logo.svg" alt="logo Mirori" />
           </a>
-          <HourContainer>{ hours_minutes }</HourContainer>
+          <HourContainer>{hour_minutes}</HourContainer>
         </HeaderWrapper>
-      )}
-      <Nav></Nav>
-    </HeaderContainer>
+        <Nav></Nav>
+      </HeaderContainer>
+
+    </>
   )
 }
 
-export default Header;
+// export default Header; 

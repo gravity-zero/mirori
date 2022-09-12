@@ -1,26 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import useGetVisitor from '../../../Hook/useGetVisitor';
+import React, { useEffect } from 'react';
+import WelcomeMsg from '../../../components/welcomeMsg/welcomeMsg';
+import { Img } from '../../styled/styledHome'
 
 const Home: React.FC = () => {
-  const getVisitor = useGetVisitor();
-  const [visitor, setVisitor] = useState<any>();
 
   useEffect(() => {
-    getVisitor.then(response => {
-      console.log(response);
-      if (!response) {
-        return null
-      }
-      setVisitor(response)
-    })
-  }, [])
+  })
 
   return (
-    <div> {visitor ?
-      <h1>Bienvenu {visitor.firstname} !</h1>
-      :
-      <h1>Bienvenu</h1>}
-    </div>
+    <>
+      {/* <script>window.location.reload() console.log('toto');
+      </script> */}
+      <WelcomeMsg className='desktopVisible' />
+      <Img src="/assets/image/plan.png" alt="" />
+    </>
   )
 }
 

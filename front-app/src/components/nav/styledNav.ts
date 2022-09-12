@@ -14,7 +14,7 @@ export const LinkContainer = styled.div`
 `;
 
 export const Image = styled.img`
-    height: 34px;
+    height: 22px;
 
     @media${device.md} {
         height: 32px;
@@ -27,7 +27,7 @@ export const Image = styled.img`
 
 export const Text = styled.p`
     margin-top: 8px;
-    font-size: 16px;
+    font-size: 14px;
     color: ${theme.colors.black};
 
     @media ${device.md} {
@@ -42,14 +42,10 @@ export const Text = styled.p`
 export const NavContainer = styled.nav`
     display: flex;
     justify-content: space-between;
-    margin: 20px;
+    margin: 2px 62px;
     
     .activeLink {
-        background-color: ${theme.colors.orange};
-        height: 84px;
-        width: 84px;
-        border-radius: 100%;
-        margin-bottom: 12px;
+       
 
         @media ${device.md} {
             background-color: ${theme.colors.white};

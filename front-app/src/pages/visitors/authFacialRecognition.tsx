@@ -8,6 +8,8 @@ const AuthFacialRecognition: React.FC = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
+    console.log(jwtParam);
+
     if (jwtParam) {
       localStorage.setItem('userToken', jwtParam)
       navigate('/')
