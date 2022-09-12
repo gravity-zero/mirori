@@ -28,9 +28,8 @@ document.onmousemove = function (event) {
   //}, 2000)
 }
 
-if (screen.width > 1600) {
-  setInterval(cursorController, 100);
-}
+
+setInterval(cursorController, 100);
 
 
 
