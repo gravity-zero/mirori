@@ -24,10 +24,6 @@ const SearchBar: React.FC<ISearchBarProps> = ({
 
   const getExhibitors = useGetExhibitors();
 
-  // const handleChange = (event: any) => {
-  //   setSelect(event.currentTarget.value);
-  // };
-
   useEffect(() => {
     getExhibitors()
       .then(data => {

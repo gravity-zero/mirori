@@ -1,9 +1,18 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
+import { Container } from '../styled/styledStandByMode';
 
 const StandbyMode: React.FC = () => {
+
+  useEffect(() => {
+    localStorage.clear();
+
+  })
+
   return (
-    <h1> Stand by mode  </h1>
+    <Container>
+      <script>window.location.reload()</script>
+      <img src="/assets/gif/giphy.gif" alt="" />
+    </Container>
   )
 }
 

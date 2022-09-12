@@ -1,6 +1,5 @@
 import React from 'react';
-//import { ILocation } from '../../Interfaces/location.interface';
-import { CardContainer, Image, StyledText } from './styledCard';
+import { CardContainer, Image, TextContainer, StyledText, Img } from './styledCard';
 
 export interface ICardProps {
   image?: string;
@@ -15,10 +14,12 @@ const Card: React.FC<ICardProps> = ({
 }) => {
 
   return (
-
     <CardContainer onClick={onClick}>
-      <div><Image src={image} /></div>
-      <StyledText>{name}</StyledText>
+      <Img><Image src={image} /></Img>
+      <TextContainer>
+        <StyledText>{name}</StyledText>
+        <img src="/assets/icons/chevron.svg" alt="" />
+      </TextContainer>
     </CardContainer>
   );
 }

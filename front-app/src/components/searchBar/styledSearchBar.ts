@@ -1,15 +1,16 @@
-import { device, theme } from '../../Styles/theme';
+import { device, theme } from '../../styles/theme';
 import styled from 'styled-components';
 
 export const Container = styled.div`
  display: flex;
  justify-content: center;
  margin-bottom: 80px;
+ width: 100vw;
  `;
 
 export const StyledInput = styled.input`
   width: 100%;
-  margin: 20px;
+  margin: 20px
   height: 47px;
   border-radius: 47px;
   border: none;
@@ -20,6 +21,7 @@ export const StyledInput = styled.input`
   @media ${device.md} {
     height: 90px;
     font-size: 24px;
+    margin: 20px 62px;
   }
 
   @media ${device.lg} {

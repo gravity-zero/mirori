@@ -1,4 +1,4 @@
-import { device, theme } from '../../Styles/theme';
+import { device } from '../../styles/theme';
 import styled from 'styled-components';
 
 export const CardContainer = styled.div`
@@ -11,16 +11,47 @@ export const CardContainer = styled.div`
   }
 
   @media ${device.md} {
-    margin: 127px;
+    margin: 92px;
+  }
+`;
+
+export const Img = styled.div`
+  height: 198px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media ${device.md} {
+    height: 274px;
   }
 `;
 
 export const Image = styled.img`
-  width: 301px;
-  object-fit: cover;
+  width: 280px;
+  @media ${device.md} {
+    width: 363px;
+    object-fit: contain;
+  }
+`;
+
+export const TextContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #EEEEEE;
+  border-bottom: 2px solid #DDDDDD;
+  border-top: 3px solid #8159A5;
+  padding: 0 24px;
+
+@media ${device.md} {
+  height: 84px;
+}
 `;
 
 export const StyledText = styled.p`
-  font-size: 24px;
-  text-align: center;
+  font-size: 16px;
+
+  @media ${device.md} {
+      font-size: 24px;
+  }
 `;

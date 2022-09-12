@@ -1,18 +1,23 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { valueToken } from '../../Context/useIsLogin';
 import useGetJwtParam from '../../Hook/useGetJwtParam';
 
-
 const AuthFacialRecognition: React.FC = () => {
-  const tokenParam = useGetJwtParam();
-  const [jwt, setJwt] = useState<any>()
+  const jwtParam = useGetJwtParam();
+  const navigate = useNavigate()
 
-  useEffect(() => setJwt(tokenParam))
+  useEffect(() => {
+    console.log(jwtParam);
+
+    if (jwtParam) {
+      localStorage.setItem('userToken', jwtParam)
+      navigate('/')
+    }
+  }, [jwtParam])
 
   return (
-    <div>
-      <h1>Route jwt Auth reconnaissance facial</h1>
-      <p>Value of term: {jwt}</p>
-    </div>
+    <valueToken.Provider value={jwtParam} />
   )
 }
 
